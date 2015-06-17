@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSMutableArray *pointViews;
 @property (nonatomic, strong) UIView *lastAnimationView;
+@property (nonatomic, assign) BOOL isFirst;
 
 @end
 
@@ -35,6 +36,7 @@
 }
 
 - (void)initialize{
+    _isFirst = YES;
     _pointViews = [NSMutableArray array];
     _numberOfPages = 0;
     _currentPage = 0;
@@ -43,7 +45,6 @@
     _indicatorMultiple = 2.0f;
     _indicatorDiameter = self.frame.size.height / _indicatorMultiple;
     _indicatorMargin = 0.0f;
-    self.backgroundColor = [UIColor redColor];
 }
 
 
@@ -73,26 +74,30 @@
         [self.pointViews addObject:point];
     }
     
+    
+    [self.sourceScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         UIView *pointView = self.pointViews[self.currentPage];
         pointView.layer.timeOffset = 1.0f;
     });
-    
-    [self.sourceScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 }
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-   
+    if (_isFirst) {
+        self.isFirst = NO;
+        return;
+    }
     NSValue *offsetValue = change[NSKeyValueChangeNewKey];
     CGPoint offset = [offsetValue CGPointValue];
     CGFloat rate = offset.x / _sourceScrollView.bounds.size.width;
-    NSLog(@"%f", rate);
     if (rate >= 0.0f && rate <= _sourceScrollView.contentSize.width/_sourceScrollView.bounds.size.width - 1.0f) {
+        
         NSUInteger currentIndex = (NSUInteger)ceilf(rate);
         NSUInteger lastIndex = (NSUInteger)floorf(rate);
-        if (currentIndex == lastIndex) {
-            lastIndex = 0.0f;
+        if (currentIndex == lastIndex && currentIndex >= 1) {
+            lastIndex -= 1;
         }
         UIView *currentPointView = self.pointViews[currentIndex];
         UIView *lastPointView = self.pointViews[lastIndex];
@@ -101,18 +106,10 @@
         if (timeOffset == 0.0f && currentIndex) {
             timeOffset = 1.0f;
         }
-//        else if (currentIndex == 0 && lastIndex == 0) {
-//            currentIndex = 1.0f;
-//            timeOffset = 0.0f;
-//        }
-        
         currentPointView.layer.timeOffset = timeOffset;
         lastPointView.layer.timeOffset = 1.0f - timeOffset;
-        NSLog(@"currentIndex == %d, lastIndex == %d, timeOffset == %f", currentIndex, lastIndex, timeOffset);
     }
 }
-
-
 
 
 - (void)addAnimation:(UIView *)view{
@@ -124,11 +121,12 @@
     [view.layer addAnimation:changeColor forKey:@"Change color"];
     
     CABasicAnimation *changeScale = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    changeScale.fromValue = [NSValue valueWithCGSize:(CGSize){1.0f, 1.0f}];
-    changeScale.toValue = [NSValue valueWithCGSize:(CGSize){_indicatorMultiple, _indicatorMultiple}];;
+    changeScale.fromValue = @1.0f;
+    changeScale.toValue = @(_indicatorMultiple);
     changeScale.duration  = 1.0;
     changeScale.removedOnCompletion = NO;
     [view.layer addAnimation:changeScale forKey:@"Change scale"];
+    
     view.layer.speed = 0.0;
 }
 

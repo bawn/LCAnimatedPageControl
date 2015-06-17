@@ -21,13 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    LCAnimatedPageControl *pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(20, 400, 280, 50)];
+    LCAnimatedPageControl *pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, 440, 280, 20)];
     pageControl.numberOfPages = 5;
-    pageControl.pageIndicatorColor = [UIColor grayColor];
-    pageControl.currentPageIndicatorColor = [UIColor blackColor];
+    pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
+    pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
     pageControl.sourceScrollView = _collectionView;
     [pageControl show];
     [self.view addSubview:pageControl];
+    pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, pageControl.center.y);
 }
 
 - (void)didReceiveMemoryWarning {

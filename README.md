@@ -1,5 +1,13 @@
 # LCAnimatedPageControl
 
+![License MIT](https://img.shields.io/dub/l/vibe-d.svg)
+![Pod version](http://img.shields.io/cocoapods/v/LCAnimatedPageControl.svg?style=flat)
+![Platform info](http://img.shields.io/cocoapods/p/LCAnimatedPageControl.svg?style=flat)
+
+
+Custom view with a simple animation.
+
+##Demo
 ![1](demo.gif)
 
 ##Installation

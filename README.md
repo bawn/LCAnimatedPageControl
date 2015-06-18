@@ -1,5 +1,8 @@
 # LCAnimatedPageControl
 
+Custom view with a simple animation.
+
+##Demo
 ![1](demo.gif)
 
 ##Installation

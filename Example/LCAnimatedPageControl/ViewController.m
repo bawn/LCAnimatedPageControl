@@ -36,7 +36,7 @@
     pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, pageControl.center.y);
     
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
-    self.flowLayout.itemSize = CGSizeMake(self.collectionView.frame.size.width - 20, self.collectionView.frame.size.height - 60);
+    self.flowLayout.itemSize = CGSizeMake(self.collectionView.frame.size.width - 60, self.collectionView.frame.size.height - 60);
     
     [pageControl addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
 }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LCAnimatedPageControl : UIView
+@interface LCAnimatedPageControl : UIControl
 
 @property (nonatomic, strong) UIScrollView *sourceScrollView;
 @property (nonatomic, assign) NSUInteger numberOfPages;
@@ -17,7 +17,7 @@
 @property (nonatomic, assign) CGFloat indicatorMultiple;// 放大倍数
 @property (nonatomic, assign) CGFloat indicatorMargin;// 点之间的间隔
 @property (nonatomic, assign) CGFloat indicatorDiameter;// 点的直径
-@property (nonatomic, assign) NSUInteger currentPage;// 当前显示的
+@property (nonatomic, assign, readonly) NSInteger currentPage;// 当前的index
 
 - (void)show;
 

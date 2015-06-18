@@ -17,16 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mMC-4f-Y6Q">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="341"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="341" id="XYe-iA-QFk"/>
-                                </constraints>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mMC-4f-Y6Q">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="20" id="G4v-NI-xiP">
                                     <size key="itemSize" width="300" height="340"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="2cD-vc-z2d">
@@ -47,6 +45,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="mMC-4f-Y6Q" secondAttribute="bottom" constant="60" id="61s-pT-NAj"/>
                             <constraint firstAttribute="trailing" secondItem="mMC-4f-Y6Q" secondAttribute="trailing" id="WFv-Rg-QCi"/>
                             <constraint firstItem="mMC-4f-Y6Q" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="fxV-bv-cAU"/>
                             <constraint firstItem="mMC-4f-Y6Q" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="hRf-sh-AQr"/>
@@ -54,6 +53,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="mMC-4f-Y6Q" id="g8O-SU-WnO"/>
+                        <outlet property="flowLayout" destination="G4v-NI-xiP" id="9qz-yc-3rc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

@@ -25,6 +25,10 @@ pageControl.sourceScrollView = _collectionView;
 [self.view addSubview:pageControl];
 ```
 
+##Requirements
+* iOS 6 or higher
+* ARC
+
 ##License
 ```
 The MIT License (MIT)

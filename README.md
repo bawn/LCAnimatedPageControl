@@ -14,18 +14,16 @@ pod 'LCAnimatedPageControl', '~> 0.0.1'
 #import <LCAnimatedPageControl.h>
 ```
 ```
-    LCAnimatedPageControl *pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
-    pageControl.numberOfPages = 5;
-    pageControl.indicatorMargin = 5.0f;
-    pageControl.indicatorMultiple = 1.6f;
-    pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
-    pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
-    pageControl.sourceScrollView = _collectionView;
-    [pageControl show];
-    [self.view addSubview:pageControl];
+LCAnimatedPageControl *pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
+pageControl.numberOfPages = 5;
+pageControl.indicatorMargin = 5.0f;
+pageControl.indicatorMultiple = 1.6f;
+pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
+pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
+pageControl.sourceScrollView = _collectionView;
+[pageControl show];
+[self.view addSubview:pageControl];
 ```
-##More Info
-The original blog post for this project can be found here.
 
 ##License
 ```

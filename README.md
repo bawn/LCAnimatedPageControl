@@ -1,14 +1,15 @@
 # LCAnimatedPageControl
 
-
-
-
 ![1](demo.gif)
 
+##Installation
 
+Cocoapods:
+```
+pod 'LCAnimatedPageControl', '~> 0.0.1'
+```
 
-
-##Usage
+##Example Usage
 ```
 #import <LCAnimatedPageControl.h>
 ```
@@ -23,15 +24,8 @@
     [pageControl show];
     [self.view addSubview:pageControl];
 ```
-##Installation
-
-Cocoapods:
-```
-pod 'LCAnimatedPageControl', '~> 0.0.1'
-```
-
-
-
+##More Info
+The original blog post for this project can be found here.
 
 ##License
 ```

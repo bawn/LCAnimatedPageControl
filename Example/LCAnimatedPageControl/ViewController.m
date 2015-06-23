@@ -53,7 +53,7 @@
 
 
 - (void)valueChanged:(LCAnimatedPageControl *)sender{
-    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * sender.currentPage, 0) animated:YES];
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * sender.currentPage, self.collectionView.contentOffset.y) animated:YES];
 }
 
 - (IBAction)buttonPress:(id)sender{

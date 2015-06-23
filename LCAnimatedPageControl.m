@@ -201,7 +201,7 @@
     [super touchesEnded:touches withEvent:event];
     CGFloat multipleRadius = _indicatorMultiple * 0.5 * _indicatorDiameter;
     UITouch *touch = [touches anyObject];
-    CGPoint point = [touch locationInView:self];
+    CGPoint point = [touch locationInView:self.contentView];
     UIView *pointView = _indicatorViews[_currentPage];
     if (point.x > pointView.center.x + multipleRadius) {
         self.currentPage++;

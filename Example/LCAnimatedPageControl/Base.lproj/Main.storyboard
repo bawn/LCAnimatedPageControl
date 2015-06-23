@@ -75,6 +75,7 @@
         <!--Navigation Controller-->
         <scene sceneID="bGc-8o-N4N">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ku-1N-mZV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="vT6-KY-3B5" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3RF-A7-tU5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -84,9 +85,8 @@
                         <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="qLY-ao-lzk"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ku-1N-mZV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="146" y="555"/>
+            <point key="canvasLocation" x="208" y="555"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

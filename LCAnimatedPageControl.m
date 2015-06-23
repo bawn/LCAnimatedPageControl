@@ -18,7 +18,6 @@
 
 @end
 
-
 @implementation LCAnimatedPageControl
 
 - (instancetype)init{
@@ -212,5 +211,9 @@
     [self setCurrentPage:_currentPage sendEvent:YES];
 }
 
+
+- (void)dealloc{
+    [self.sourceScrollView removeObserver:self forKeyPath:@"contentOffset"];
+}
 
 @end

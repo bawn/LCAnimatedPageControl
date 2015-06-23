@@ -6,6 +6,7 @@
 
 
 Custom view with a simple animation.
+Support AtuoLayout
 
 ##Demo
 ![1](demo.gif)
@@ -14,7 +15,7 @@ Custom view with a simple animation.
 
 Cocoapods:
 ```
-pod 'LCAnimatedPageControl', '~> 0.0.4'
+pod 'LCAnimatedPageControl'
 ```
 
 ##Example Usage
@@ -27,8 +28,8 @@ self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageCo
 self.pageControl.numberOfPages = 5;
 self.pageControl.indicatorMargin = 5.0f;
 self.pageControl.indicatorMultiple = 1.6f;
-self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
-self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
+self.pageControl.pageIndicatorColor = [UIColor redColor];
+self.pageControl.currentPageIndicatorColor = [UIColor blackColor];
 self.pageControl.sourceScrollView = _collectionView;
 [self.pageControl prepareShow];
 [self.view addSubview:_pageControl];

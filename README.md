@@ -14,7 +14,7 @@ Custom view with a simple animation.
 
 Cocoapods:
 ```
-pod 'LCAnimatedPageControl', '~> 0.0.1'
+pod 'LCAnimatedPageControl', '~> 0.0.3'
 ```
 
 ##Example Usage

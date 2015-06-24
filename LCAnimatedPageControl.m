@@ -200,8 +200,8 @@
     CGFloat rate = newOffset.x / scrollViewWidth;
     if (rate >= 0.0f && rate <= _numberOfPages - 1) {
         
-        NSUInteger currentIndex = (NSUInteger)ceilf(rate);
-        NSUInteger lastIndex = (NSUInteger)floorf(rate);
+        NSInteger currentIndex = (NSInteger)ceilf(rate);
+        NSInteger lastIndex = (NSInteger)floorf(rate);
         if (currentIndex == lastIndex && currentIndex >= 1) {
             lastIndex -= 1;
         }
@@ -214,7 +214,7 @@
             (NSInteger)ABS(newOffset.x - oldOffset.x)) {
             
             CGFloat oldRate = oldOffset.x / scrollViewWidth;
-            lastIndex = (NSUInteger)ceilf(oldRate);
+            lastIndex = (NSInteger)ceilf(oldRate);
             if (lastIndex <= _numberOfPages - 1) {
                 lastPointView = self.indicatorViews[lastIndex];
                 currentPointView.layer.timeOffset = 1.0f;

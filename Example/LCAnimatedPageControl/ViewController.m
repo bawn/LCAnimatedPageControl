@@ -28,7 +28,7 @@
     
 //    self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
 //    self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
-//    self.pageControl.numberOfPages = 5;
+//    self.pageControl.numberOfPages = _number;
 ////    self.pageControl.indicatorDiameter = 10.0f;// Optional
 //    self.pageControl.indicatorMargin = 5.0f;
 //    self.pageControl.indicatorMultiple = 1.6f;
@@ -43,8 +43,8 @@
     
     self.pageControl = [[LCAnimatedPageControl alloc] init];
     self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
-    self.pageControl.numberOfPages = 5;
-    self.pageControl.indicatorDiameter = 10.0f;// Required
+    self.pageControl.numberOfPages = _number;
+    self.pageControl.indicatorDiameter = 8.0f;// Required
     self.pageControl.indicatorMargin = 5.0f;
     self.pageControl.indicatorMultiple = 1.6f;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];

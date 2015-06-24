@@ -139,28 +139,29 @@
             NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(difference))];
             [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
             [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(difference))]];
+            [self.contentView removeConstraints:_contentView.constraints];
             [self layoutContentView];
         }
         // add
         else{
+            [self.contentView removeConstraints:_contentView.constraints];
             [self addIndicatorsWithIndex:lastNumberPages];
         }
+        [self resetContentLayout];
         [self setDefaultIndicator];
-        [self resetContentWidth];
     }
 }
 
 
-- (void)resetContentWidth{
+- (void)resetContentLayout{
     if (_isAutoLayout) {
-        [self.contentView removeConstraint:_contentWidthCon];
         if (_numberOfPages) {
             CGFloat viewWidth = (_indicatorDiameter * _indicatorMultiple) * _numberOfPages + (_numberOfPages - 1) * _indicatorMargin;
             self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
             [self.contentView addConstraint:_contentWidthCon];
+            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
         }
     }
-
 }
 
 - (void)setDefaultIndicator{
@@ -172,8 +173,9 @@
             CGFloat rate = offset.x / self.sourceScrollView.bounds.size.width;
             NSUInteger currentIndex = (NSUInteger)ceilf(rate);
             if (currentIndex > self.numberOfPages - 1) {
-                currentIndex = 0;
+                currentIndex --;
             }
+            NSLog(@"%d", currentIndex);
             UIView *pointView = self.indicatorViews[currentIndex];
             self.currentPage = currentIndex;
             pointView.layer.timeOffset = 1.0f;
@@ -239,6 +241,7 @@
     if (self.isAutoLayout) {
         [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
             view.translatesAutoresizingMaskIntoConstraints = NO;
+            [view removeConstraints:view.constraints];
             [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
             [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:_indicatorDiameter]];
             [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];

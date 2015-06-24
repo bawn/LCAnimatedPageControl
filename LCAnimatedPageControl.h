@@ -17,7 +17,6 @@
 @property (nonatomic, assign) CGFloat indicatorMultiple;
 @property (nonatomic, assign) CGFloat indicatorMargin;
 @property (nonatomic, assign) CGFloat indicatorDiameter;
-@property (nonatomic, assign) NSInteger wantPage;
 @property (nonatomic, assign, readonly) NSInteger currentPage;
 
 - (void)prepareShow;

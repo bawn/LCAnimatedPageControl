@@ -130,7 +130,6 @@
     NSInteger lastNumberPages = _numberOfPages;
     _numberOfPages = numberOfPages;
     if (difference && self.superview) {
-        
         // remove
         if (difference < 0) {
             if (_currentPage != lastNumberPages - 1) {
@@ -189,12 +188,15 @@
     if (!_sourceScrollView.decelerating && _isDefaultSet) {
         return;
     }
-    if (ABS(_wantPage - _currentPage) >= 1) {
-        
-    }
-    NSValue *offsetValue = change[NSKeyValueChangeNewKey];
-    CGPoint offset = [offsetValue CGPointValue];
-    CGFloat rate = offset.x / _sourceScrollView.bounds.size.width;
+    NSValue *oldOffsetValue = change[NSKeyValueChangeOldKey];
+    CGPoint oldOffset = [oldOffsetValue CGPointValue];
+    
+    NSValue *newOffsetValue = change[NSKeyValueChangeNewKey];
+    CGPoint newOffset = [newOffsetValue CGPointValue];
+
+    CGFloat scrollViewWidth = [(UIScrollView *)object bounds].size.width;
+    
+    CGFloat rate = newOffset.x / scrollViewWidth;
     if (rate >= 0.0f && rate <= _numberOfPages - 1) {
         
         NSUInteger currentIndex = (NSUInteger)ceilf(rate);
@@ -204,6 +206,22 @@
         }
         UIView *currentPointView = self.indicatorViews[currentIndex];
         UIView *lastPointView = self.indicatorViews[lastIndex];
+        
+        if ((NSInteger)newOffset.x % (NSInteger)scrollViewWidth == 0 &&
+            (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
+            newOffset.x != oldOffset.x &&
+            (NSInteger)ABS(newOffset.x - oldOffset.x)) {
+            
+            CGFloat oldRate = oldOffset.x / scrollViewWidth;
+            lastIndex = (NSUInteger)ceilf(oldRate);
+            if (lastIndex <= _numberOfPages - 1) {
+                lastPointView = self.indicatorViews[lastIndex];
+                currentPointView.layer.timeOffset = 1.0f;
+                lastPointView.layer.timeOffset = 0.0f;
+                self.currentPage = currentIndex;
+            }
+            return;
+        }
         
         CGFloat timeOffset = rate - floorf(rate);
         if (timeOffset == 0.0f && currentIndex) {

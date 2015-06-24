@@ -175,7 +175,6 @@
             if (currentIndex > self.numberOfPages - 1) {
                 currentIndex --;
             }
-            NSLog(@"%d", currentIndex);
             UIView *pointView = self.indicatorViews[currentIndex];
             self.currentPage = currentIndex;
             pointView.layer.timeOffset = 1.0f;

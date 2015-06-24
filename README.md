@@ -34,7 +34,7 @@ self.pageControl.sourceScrollView = _collectionView;
 [self.view addSubview:_pageControl];
 ```
 
-// If you want to scrollView to scroll to the non-adjacent location, Please realize the following protocol methods
+If you want to scrollView to scroll to the non-adjacent location, Please realize the following protocol methods
 
 ```
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;{

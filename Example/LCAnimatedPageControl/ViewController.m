@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "LCAnimatedPageControl.h"
 
-@interface ViewController ()<UICollectionViewDataSource>
+@interface ViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
@@ -25,7 +25,6 @@
     [self.view layoutIfNeeded];
     [self.collectionView layoutIfNeeded];
     self.number = 5;
-    
     
 //    self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
 //    self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
@@ -61,7 +60,8 @@
                                 [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0f],
                                 ]];
     
-    [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
+//    [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
+    
     self.flowLayout.itemSize = CGSizeMake(self.collectionView.frame.size.width - 60, self.collectionView.frame.size.height - 100);
     
     [self.pageControl addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -69,11 +69,17 @@
     [self.collectionView reloadData];
 }
 
+
+// If you want to scrollView to scroll to the non-adjacent location, Please realize the following protocol methods
+
+//- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;{
+//    [self.pageControl clearIndicators];
+//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (void)valueChanged:(LCAnimatedPageControl *)sender{
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * sender.currentPage, self.collectionView.contentOffset.y) animated:YES];
@@ -101,14 +107,9 @@
     return _number;
 }
 
-
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    
     return cell;
-    
 }
-
 
 @end

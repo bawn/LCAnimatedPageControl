@@ -17,6 +17,7 @@
 @property (nonatomic, assign) CGFloat radius;
 @property (nonatomic, strong) NSLayoutConstraint *contentWidthCon;
 @property (nonatomic, assign) BOOL isAutoLayout;
+
 @end
 
 @implementation LCAnimatedPageControl
@@ -76,6 +77,14 @@
         self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
         [self.contentView addConstraint:_contentWidthCon];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
+    }
+}
+
+- (void)clearIndicators{
+    for (UIView *view in _indicatorViews) {
+        if (view.layer.timeOffset < 1.0f) {
+            view.layer.timeOffset = 0.0f;
+        }
     }
 }
 
@@ -180,6 +189,9 @@
     if (!_sourceScrollView.decelerating && _isDefaultSet) {
         return;
     }
+    if (ABS(_wantPage - _currentPage) >= 1) {
+        
+    }
     NSValue *offsetValue = change[NSKeyValueChangeNewKey];
     CGPoint offset = [offsetValue CGPointValue];
     CGFloat rate = offset.x / _sourceScrollView.bounds.size.width;
@@ -261,7 +273,6 @@
     
     view.layer.speed = 0.0;
 }
-
 
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{

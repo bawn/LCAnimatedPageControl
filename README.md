@@ -5,8 +5,7 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCAnimatedPageControl.svg?style=flat)
 
 
-Custom view with a simple animation.
-Support AtuoLayout
+Custom view with a simple animation, Support AtuoLayout.
 
 ##Demo
 ![1](demo.gif)
@@ -35,11 +34,19 @@ self.pageControl.sourceScrollView = _collectionView;
 [self.view addSubview:_pageControl];
 ```
 
+// If you want to scrollView to scroll to the non-adjacent location, Please realize the following protocol methods
+
+```
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;{
+    [self.pageControl clearIndicators];
+}
+```
+
 ##Requirements
 * iOS 6 or higher
 * ARC
 
-#More Info
+##More Info
 [Blog](http://bawn.github.io/ios/uipagecontrol/2015/06/16/LCAnimatedPageControl.html)
 
 ##License

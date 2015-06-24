@@ -171,7 +171,7 @@
             
             CGPoint offset = self.sourceScrollView.contentOffset;
             CGFloat rate = offset.x / self.sourceScrollView.bounds.size.width;
-            NSUInteger currentIndex = (NSUInteger)ceilf(rate);
+            NSInteger currentIndex = (NSInteger)ceilf(rate);
             if (currentIndex > self.numberOfPages - 1) {
                 currentIndex --;
             }

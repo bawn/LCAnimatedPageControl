@@ -5,7 +5,7 @@
 ![Platform info](http://img.shields.io/cocoapods/p/LCAnimatedPageControl.svg?style=flat)
 
 
-Custom view with a simple animation, Support AtuoLayout.
+Custom UIPageControl with a simple animation, Support AtuoLayout.
 
 ##Demo
 ![1](demo.gif)

@@ -26,39 +26,40 @@
     [self.collectionView layoutIfNeeded];
     self.number = 5;
     
-//    self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
-//    self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
-//    self.pageControl.numberOfPages = _number;
-////    self.pageControl.indicatorDiameter = 10.0f;// Optional
-//    self.pageControl.indicatorMargin = 5.0f;
-//    self.pageControl.indicatorMultiple = 1.6f;
-//    self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
-//    self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
-//    self.pageControl.sourceScrollView = _collectionView;
-//    [self.pageControl prepareShow];
-//    [self.view addSubview:_pageControl];
-    
-    
-    /* ------autolayout-------- */
-    
-    self.pageControl = [[LCAnimatedPageControl alloc] init];
-    self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
+    self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
+    self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
     self.pageControl.numberOfPages = _number;
-    self.pageControl.indicatorDiameter = 8.0f;// Required
-    self.pageControl.indicatorMargin = 5.0f;
-    self.pageControl.indicatorMultiple = 1.6f;
+    self.pageControl.indicatorDiameter = 10.0f;// Optional
+    self.pageControl.indicatorMargin = 20.0f;
+    self.pageControl.indicatorMultiple = 1.0f;
+    self.pageControl.pageStyle = SquirmPageStyle;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
     self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
     self.pageControl.sourceScrollView = _collectionView;
     [self.pageControl prepareShow];
     [self.view addSubview:_pageControl];
     
-    [self.view addConstraints:@[
-                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f],
-                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f],
-                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0f],
-                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0f],
-                                ]];
+    
+    /* ------autolayout-------- */
+    
+//    self.pageControl = [[LCAnimatedPageControl alloc] init];
+//    self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.pageControl.numberOfPages = _number;
+//    self.pageControl.indicatorDiameter = 8.0f;// Required
+//    self.pageControl.indicatorMargin = 5.0f;
+//    self.pageControl.indicatorMultiple = 1.0f;
+//    self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
+//    self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
+//    self.pageControl.sourceScrollView = _collectionView;
+//    [self.pageControl prepareShow];
+//    [self.view addSubview:_pageControl];
+//    
+//    [self.view addConstraints:@[
+//                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f],
+//                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f],
+//                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0f],
+//                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0f],
+//                                ]];
     
 //    [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
     
@@ -67,6 +68,7 @@
     [self.pageControl addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     
     [self.collectionView reloadData];
+    
 }
 
 

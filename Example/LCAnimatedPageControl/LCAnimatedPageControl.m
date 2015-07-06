@@ -7,9 +7,12 @@
 //
 
 #import "LCAnimatedPageControl.h"
-//#import "SquirmView.h"
+
+//static CGFloat kLCDoubleNumber = 2.0f;
+static CGFloat kLCHalfNumber = 0.5f;
 
 @interface LCAnimatedPageControl ()<UIScrollViewDelegate>
+
 
 @property (nonatomic, strong) NSMutableArray *indicatorViews;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -20,6 +23,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *squirmCenterCon;
 @property (nonatomic, strong) NSLayoutConstraint *squirmWidthCon;
 @property (nonatomic, strong) UIView *squirmView;
+@property (nonatomic, assign) CGFloat squirmScale;
 //@property (nonatomic, assign) BOOL isAutoLayout;
 //@property (nonatomic, strong) UIView *single`;
 
@@ -68,14 +72,14 @@
     _indicatorMultiple = 1.0f;
     _indicatorDiameter = self.frame.size.height / _indicatorMultiple;
     _indicatorMargin = 0.0f;
-    _radius = _indicatorDiameter * 0.5f;
-    
+    _radius = _indicatorDiameter * kLCHalfNumber;
 //    self.contentView.backgroundColor = [UIColor blackColor];
 }
 
 
 - (void)prepareShow{
 
+    _squirmScale = _indicatorMargin / _indicatorDiameter;
     [self addIndicatorsWithIndex:0];
     [self.sourceScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
     
@@ -88,7 +92,7 @@
     //    }
 
     
-    if (_pageStyle == SclaePageStyle) {
+    if (_pageStyle == ScalePageStyle) {
         [self setDefaultIndicator];
     }
     else if(_pageStyle == SquirmPageStyle){
@@ -99,19 +103,8 @@
         self.squirmView .backgroundColor = _currentPageIndicatorColor;
         [self.contentView addSubview:_squirmView];
         
-        self.squirmCenterCon = [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:-_indicatorDiameter * 0.5f];
-        self.squirmWidthCon = [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:self.indicatorDiameter];
-        [self.contentView addConstraints:@[
-                                           self.squirmCenterCon,
-                                           [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]
-                                           ]];
-        
-        [self.squirmView addConstraint:[NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:self.indicatorDiameter]];
-        self.squirmWidthCon = [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.squirmView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
-        [self.squirmView addConstraint:self.squirmWidthCon];
+        [self layoutSquirmView];
         [self.contentView layoutIfNeeded];
-//        [self configBPAnimation:_squirmView];
-        
     }
     
 }
@@ -127,7 +120,7 @@
 
 - (void)setIndicatorDiameter:(CGFloat)indicatorDiameter{
     _indicatorDiameter = indicatorDiameter;
-    self.radius = _indicatorDiameter * 0.5f;
+    self.radius = _indicatorDiameter * kLCHalfNumber;
 }
 
 - (void)addIndicatorsWithIndex:(NSInteger)index{
@@ -167,6 +160,7 @@
     NSInteger lastNumberPages = _numberOfPages;
     _numberOfPages = numberOfPages;
     if (difference && self.superview) {
+        [self.contentView removeConstraints:_contentView.constraints];
         // remove
         if (difference < 0) {
             if (_currentPage != lastNumberPages - 1) {
@@ -176,16 +170,16 @@
             NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(difference))];
             [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
             [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(difference))]];
-            [self.contentView removeConstraints:_contentView.constraints];
             [self layoutContentView];
         }
         // add
         else{
-            [self.contentView removeConstraints:_contentView.constraints];
             [self addIndicatorsWithIndex:lastNumberPages];
         }
         [self resetContentLayout];
-        [self setDefaultIndicator];
+        if (_pageStyle == ScalePageStyle) {
+            [self setDefaultIndicator];
+        }
     }
 }
 
@@ -198,6 +192,8 @@
             [self.contentView addConstraint:_contentWidthCon];
             [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
         }
+    [self layoutSquirmView];
+    
 //    }
 }
 
@@ -223,9 +219,6 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     
-    
-    
-    
     NSValue *oldOffsetValue = change[NSKeyValueChangeOldKey];
     CGPoint oldOffset = [oldOffsetValue CGPointValue];
     
@@ -249,7 +242,7 @@
             timeOffset = 1.0f;
         }
         
-        if (_pageStyle == SclaePageStyle) {
+        if (_pageStyle == ScalePageStyle) {
             if (!_sourceScrollView.decelerating && _isDefaultSet) {
                 return;
             }
@@ -274,18 +267,17 @@
             self.currentPage = currentIndex;
         }
         else if (_pageStyle == SquirmPageStyle){
-//            NSLog(@"%f", ABS(timeOffset - 0.5));
             CGFloat newOffset;
-            if (timeOffset - 0.5 <= 0.0f) {
-                newOffset = timeOffset*2;
+            if (timeOffset - kLCHalfNumber <= 0.0f) {
+                newOffset = timeOffset * _squirmScale;
             }
-            else if (timeOffset - 0.5){
-                newOffset = ABS(timeOffset - 1.0f)*2;
+            else if (timeOffset - kLCHalfNumber){
+                newOffset = ABS(timeOffset - 1.0f) * _squirmScale;
             }
-            NSLog(@"%f", newOffset);
-//            self.squirmView.layer.timeOffset = timeOffset;
-            self.squirmCenterCon.constant = timeOffset  * 2* (_indicatorMargin - _indicatorDiameter * 0.5f) + _indicatorDiameter * 0.5f;
+//            NSLog(@"%f", newOffset);
+            self.squirmCenterCon.constant = rate  * _squirmScale * (_indicatorMargin - _indicatorDiameter / _squirmScale) + _indicatorDiameter * kLCHalfNumber - _indicatorDiameter / _squirmScale * floorf(rate);
             self.squirmWidthCon.constant = newOffset * (_indicatorDiameter + _indicatorMargin);
+            NSLog(@"%f", _squirmCenterCon.constant);
         }
     }
 
@@ -342,6 +334,24 @@
 }
 
 
+- (void)layoutSquirmView{
+    [self.contentView bringSubviewToFront:_squirmView];
+    self.squirmView.hidden = !_numberOfPages;
+    self.squirmCenterCon = [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:-_indicatorDiameter * kLCHalfNumber];
+    [self.contentView addConstraints:@[
+                                       self.squirmCenterCon,
+                                       [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]
+                                       ]];
+    if (!_squirmWidthCon) {
+        [self.squirmView addConstraint:[NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:self.indicatorDiameter]];
+        
+        self.squirmWidthCon = [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.squirmView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
+        [self.squirmView addConstraint:self.squirmWidthCon];
+    }
+
+}
+
+
 
 - (void)layoutContentView{
 //    if (self.isAutoLayout) {
@@ -357,7 +367,7 @@
                 [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:lastView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:_indicatorMargin + _indicatorMultiple * _indicatorDiameter]];
             }
             else{
-                [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple * 0.5f]];
+                [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple * kLCHalfNumber]];
                 
             }
         }];
@@ -443,7 +453,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesEnded:touches withEvent:event];
-    CGFloat multipleRadius = _indicatorMultiple * 0.5 * _indicatorDiameter;
+    CGFloat multipleRadius = _indicatorMultiple * kLCHalfNumber * _indicatorDiameter;
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.contentView];
     UIView *pointView = _indicatorViews[_currentPage];

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7A68D8A31B450433004B77B9 /* LCAnimatedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */; };
 		7A68D8A41B450433004B77B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A21B450433004B77B9 /* ViewController.m */; };
-		7A7095611B4A826600F68BFD /* SquirmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7095601B4A826600F68BFD /* SquirmView.m */; };
 		7A7420D91B3149EC00B30BEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7420D81B3149EC00B30BEA /* main.m */; };
 		7A7420DC1B3149EC00B30BEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7420DB1B3149EC00B30BEA /* AppDelegate.m */; };
 		7A7420E21B3149EC00B30BEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A7420E01B3149EC00B30BEA /* Main.storyboard */; };
@@ -33,8 +32,6 @@
 		7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAnimatedPageControl.m; sourceTree = "<group>"; };
 		7A68D8A11B450433004B77B9 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7A68D8A21B450433004B77B9 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		7A70955F1B4A826600F68BFD /* SquirmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquirmView.h; sourceTree = "<group>"; };
-		7A7095601B4A826600F68BFD /* SquirmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquirmView.m; sourceTree = "<group>"; };
 		7A7420D31B3149EC00B30BEA /* LCAnimatedPageControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCAnimatedPageControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A7420D71B3149EC00B30BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A7420D81B3149EC00B30BEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,8 +86,6 @@
 			children = (
 				7A68D89F1B450433004B77B9 /* LCAnimatedPageControl.h */,
 				7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */,
-				7A70955F1B4A826600F68BFD /* SquirmView.h */,
-				7A7095601B4A826600F68BFD /* SquirmView.m */,
 				7A68D8A11B450433004B77B9 /* ViewController.h */,
 				7A68D8A21B450433004B77B9 /* ViewController.m */,
 				7A7420DA1B3149EC00B30BEA /* AppDelegate.h */,
@@ -231,7 +226,6 @@
 			files = (
 				7A7420DC1B3149EC00B30BEA /* AppDelegate.m in Sources */,
 				7A68D8A31B450433004B77B9 /* LCAnimatedPageControl.m in Sources */,
-				7A7095611B4A826600F68BFD /* SquirmView.m in Sources */,
 				7A68D8A41B450433004B77B9 /* ViewController.m in Sources */,
 				7A7420D91B3149EC00B30BEA /* main.m in Sources */,
 			);

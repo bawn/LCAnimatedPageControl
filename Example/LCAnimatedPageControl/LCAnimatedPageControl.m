@@ -8,11 +8,10 @@
 
 #import "LCAnimatedPageControl.h"
 
-//static CGFloat kLCDoubleNumber = 2.0f;
+static CGFloat kLCDoubleNumber = 2.0f;
 static CGFloat kLCHalfNumber = 0.5f;
 
 @interface LCAnimatedPageControl ()<UIScrollViewDelegate>
-
 
 @property (nonatomic, strong) NSMutableArray *indicatorViews;
 @property (nonatomic, assign) NSInteger currentPage;
@@ -23,9 +22,6 @@ static CGFloat kLCHalfNumber = 0.5f;
 @property (nonatomic, strong) NSLayoutConstraint *squirmCenterCon;
 @property (nonatomic, strong) NSLayoutConstraint *squirmWidthCon;
 @property (nonatomic, strong) UIView *squirmView;
-@property (nonatomic, assign) CGFloat squirmScale;
-//@property (nonatomic, assign) BOOL isAutoLayout;
-//@property (nonatomic, strong) UIView *single`;
 
 @end
 
@@ -48,22 +44,14 @@ static CGFloat kLCHalfNumber = 0.5f;
 }
 
 - (void)initialize{
-//    _isAutoLayout = !self.superview.translatesAutoresizingMaskIntoConstraints;
-//    if (_isAutoLayout) {
     
-        _contentView = [[UIView alloc] init];
-        self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addSubview:_contentView];
-        [self addConstraints:@[
-                               [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f],
-                               [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]
-                               ]];
-//    }
-//    else{
-//        _contentView = [[UIView alloc] initWithFrame:self.frame];
-//        [self addSubview:_contentView];
-//
-//    }
+    _contentView = [[UIView alloc] init];
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_contentView];
+    [self addConstraints:@[
+                           [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]
+                           ]];
     _indicatorViews = [NSMutableArray array];
     _numberOfPages = 0;
     _currentPage = 0;
@@ -73,25 +61,19 @@ static CGFloat kLCHalfNumber = 0.5f;
     _indicatorDiameter = self.frame.size.height / _indicatorMultiple;
     _indicatorMargin = 0.0f;
     _radius = _indicatorDiameter * kLCHalfNumber;
-//    self.contentView.backgroundColor = [UIColor blackColor];
 }
-
 
 - (void)prepareShow{
 
-    _squirmScale = _indicatorMargin / _indicatorDiameter;
+
     [self addIndicatorsWithIndex:0];
     [self.sourceScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
     
-
-    //    if (_isAutoLayout) {
     CGFloat viewWidth = (_indicatorDiameter * _indicatorMultiple) * _numberOfPages + (_numberOfPages - 1) * _indicatorMargin;
     self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
     [self.contentView addConstraint:_contentWidthCon];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
-    //    }
-
-    
+   
     if (_pageStyle == ScalePageStyle) {
         [self setDefaultIndicator];
     }
@@ -104,9 +86,7 @@ static CGFloat kLCHalfNumber = 0.5f;
         [self.contentView addSubview:_squirmView];
         
         [self layoutSquirmView];
-        [self.contentView layoutIfNeeded];
     }
-    
 }
 
 
@@ -125,13 +105,7 @@ static CGFloat kLCHalfNumber = 0.5f;
 
 - (void)addIndicatorsWithIndex:(NSInteger)index{
     for (NSInteger number = index; number < _numberOfPages; number ++ ) {
-        UIView *point = nil;
-//        if (_isAutoLayout) {
-            point =[[UIView alloc] init];
-//        }
-//        else{
-//            point = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _indicatorDiameter, _indicatorDiameter)];
-//        }
+        UIView *point = [[UIView alloc] init];
         point.clipsToBounds = YES;
         point.layer.cornerRadius = _radius;
         point.backgroundColor = _pageIndicatorColor;
@@ -185,16 +159,13 @@ static CGFloat kLCHalfNumber = 0.5f;
 
 
 - (void)resetContentLayout{
-//    if (_isAutoLayout) {
-        if (_numberOfPages) {
-            CGFloat viewWidth = (_indicatorDiameter * _indicatorMultiple) * _numberOfPages + (_numberOfPages - 1) * _indicatorMargin;
-            self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
-            [self.contentView addConstraint:_contentWidthCon];
-            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
-        }
+    if (_numberOfPages) {
+        CGFloat viewWidth = (_indicatorDiameter * _indicatorMultiple) * _numberOfPages + (_numberOfPages - 1) * _indicatorMargin;
+        self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
+        [self.contentView addConstraint:_contentWidthCon];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
+    }
     [self layoutSquirmView];
-    
-//    }
 }
 
 - (void)setDefaultIndicator{
@@ -269,68 +240,16 @@ static CGFloat kLCHalfNumber = 0.5f;
         else if (_pageStyle == SquirmPageStyle){
             CGFloat newOffset;
             if (timeOffset - kLCHalfNumber <= 0.0f) {
-                newOffset = timeOffset * _squirmScale;
+                newOffset = timeOffset * kLCDoubleNumber;
             }
             else if (timeOffset - kLCHalfNumber){
-                newOffset = ABS(timeOffset - 1.0f) * _squirmScale;
+                newOffset = ABS(timeOffset - 1.0f) * kLCDoubleNumber;
             }
-//            NSLog(@"%f", newOffset);
-            self.squirmCenterCon.constant = rate  * _squirmScale * (_indicatorMargin - _indicatorDiameter / _squirmScale) + _indicatorDiameter * kLCHalfNumber - _indicatorDiameter / _squirmScale * floorf(rate);
+            CGFloat number = (_indicatorMargin - _indicatorDiameter) * kLCHalfNumber;
+            self.squirmCenterCon.constant = rate  * kLCDoubleNumber * (_indicatorMargin - number) + _indicatorDiameter * kLCHalfNumber;
             self.squirmWidthCon.constant = newOffset * (_indicatorDiameter + _indicatorMargin);
-            NSLog(@"%f", _squirmCenterCon.constant);
         }
     }
-
-    
-//    if (_pageStyle == SclaePageStyle) {
-//        
-//        NSValue *oldOffsetValue = change[NSKeyValueChangeOldKey];
-//        CGPoint oldOffset = [oldOffsetValue CGPointValue];
-//        
-//        NSValue *newOffsetValue = change[NSKeyValueChangeNewKey];
-//        CGPoint newOffset = [newOffsetValue CGPointValue];
-//        
-//        CGFloat scrollViewWidth = [(UIScrollView *)object bounds].size.width;
-//        
-//        CGFloat rate = newOffset.x / scrollViewWidth;
-//        if (rate >= 0.0f && rate <= _numberOfPages - 1) {
-//            
-//            NSInteger currentIndex = (NSInteger)ceilf(rate);
-//            NSInteger lastIndex = (NSInteger)floorf(rate);
-//            if (currentIndex == lastIndex && currentIndex >= 1) {
-//                lastIndex -= 1;
-//            }
-//            UIView *currentPointView = self.indicatorViews[currentIndex];
-//            UIView *lastPointView = self.indicatorViews[lastIndex];
-//            
-//            if ((NSInteger)newOffset.x % (NSInteger)scrollViewWidth == 0 &&
-//                (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
-//                newOffset.x != oldOffset.x &&
-//                (NSInteger)ABS(newOffset.x - oldOffset.x)) {
-//                
-//                CGFloat oldRate = oldOffset.x / scrollViewWidth;
-//                lastIndex = (NSInteger)ceilf(oldRate);
-//                if (lastIndex <= _numberOfPages - 1) {
-//                    lastPointView = self.indicatorViews[lastIndex];
-//                    currentPointView.layer.timeOffset = 1.0f;
-//                    lastPointView.layer.timeOffset = 0.0f;
-//                    self.currentPage = currentIndex;
-//                }
-//                return;
-//            }
-//            
-//            CGFloat timeOffset = rate - floorf(rate);
-//            if (timeOffset == 0.0f && currentIndex) {
-//                timeOffset = 1.0f;
-//            }
-//            currentPointView.layer.timeOffset = timeOffset;
-//            lastPointView.layer.timeOffset = 1.0f - timeOffset;
-//            self.currentPage = currentIndex;
-//        }
-//    }
-//    else if (_pageStyle == SquirmPageStyle){
-//        
-//    }
 }
 
 
@@ -348,49 +267,28 @@ static CGFloat kLCHalfNumber = 0.5f;
         self.squirmWidthCon = [NSLayoutConstraint constraintWithItem:self.squirmView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.squirmView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
         [self.squirmView addConstraint:self.squirmWidthCon];
     }
-
 }
 
 
 
 - (void)layoutContentView{
-//    if (self.isAutoLayout) {
-        [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-            view.translatesAutoresizingMaskIntoConstraints = NO;
-            [view removeConstraints:view.constraints];
-            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-            [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:_indicatorDiameter]];
-            [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
-            
-            if (idx) {
-                UIView *lastView = self.indicatorViews[idx - 1];
-                [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:lastView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:_indicatorMargin + _indicatorMultiple * _indicatorDiameter]];
-            }
-            else{
-                [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple * kLCHalfNumber]];
-                
-            }
-        }];
-//    }
-//    else{
-//        [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-//            CGFloat centerX = 0.0f;
-//            if (idx) {
-//                UIView *lastView = self.indicatorViews[idx - 1];
-//                centerX += lastView.center.x + _indicatorDiameter * _indicatorMultiple + _indicatorMargin;
-//            }
-//            else{
-//                centerX = _indicatorDiameter * _indicatorMultiple * 0.5;
-//            }
-//            view.center = CGPointMake(centerX, self.frame.size.height * 0.5f);
-//        }];
-//        
-//        CGFloat viewWidth = (_indicatorDiameter * _indicatorMultiple) * _numberOfPages + (_numberOfPages - 1) * _indicatorMargin;
-//        self.contentView.frame = CGRectMake(0, 0, viewWidth, self.frame.size.height);
-//        self.contentView.center = CGPointMake(self.frame.size.width * 0.5f, self.frame.size.height * 0.5f);
-//    }
-}
+    [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        [view removeConstraints:view.constraints];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:_indicatorDiameter]];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
+        
+        if (idx) {
+            UIView *lastView = self.indicatorViews[idx - 1];
+            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:lastView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:_indicatorMargin + _indicatorMultiple * _indicatorDiameter]];
+        }
+        else{
+            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple * kLCHalfNumber]];
+        }
+    }];
 
+}
 
 
 - (void)configCSAnimation:(UIView *)view{
@@ -398,10 +296,6 @@ static CGFloat kLCHalfNumber = 0.5f;
     [self configScaleAnimation:view];
 }
 
-- (void)configBPAnimation:(UIView *)view{
-    [self configBoundsAnimation:view];
-    [self configPositionAnimation:view];
-}
 
 - (void)configColorAnimation:(UIView *)view{
     CABasicAnimation *changeColor =  [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
@@ -421,34 +315,6 @@ static CGFloat kLCHalfNumber = 0.5f;
     [view.layer addAnimation:changeScale forKey:@"Change scale"];
     view.layer.speed = 0.0;
 }
-
-
-- (void)configBoundsAnimation:(UIView *)view{
-    CABasicAnimation *changeBounds = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    changeBounds.fromValue = [NSValue valueWithCGRect:view.bounds];
-    changeBounds.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, view.bounds.size.width + _indicatorMargin + _indicatorDiameter, view.bounds.size.height)];
-    changeBounds.duration  = 1.0;
-    changeBounds.removedOnCompletion = NO;
-    [view.layer addAnimation:changeBounds forKey:@"bounds"];
-    view.layer.speed = 0.0;
-    
-//    view.layer.anchorPoint = CGPointMake(0.0f, 0.5f);
-//    view.layer.position = CGPointMake(view.layer.position.x - view.frame.size.width / 2, view.layer.position.y);
-}
-
-
-- (void)configPositionAnimation:(UIView *)view{
-    
-    CABasicAnimation *changePosition = [CABasicAnimation animationWithKeyPath:@"position"];
-    changePosition.fromValue = [NSValue valueWithCGPoint:view.center];
-    changePosition.toValue = [NSValue valueWithCGPoint:CGPointMake(view.center.x + _indicatorMargin + _indicatorDiameter, view.center.y)];
-    changePosition.duration  = 1.0;
-    changePosition.removedOnCompletion = NO;
-    [view.layer addAnimation:changePosition forKey:@"position"];
-    view.layer.speed = 0.0;
-}
-
-
 
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{

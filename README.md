@@ -8,7 +8,14 @@
 Custom UIPageControl with a simple animation, Support AtuoLayout.
 
 ##Demo
-![1](demo.gif)
+
+**ScalePageStyle**
+
+![1](demo1.gif)
+
+**SquirmPageStyle**
+
+![2](demo2.gif)
 
 ##Installation
 
@@ -24,6 +31,7 @@ pod 'LCAnimatedPageControl'
 ```
 self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
 self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
+self.pageControl.pageStyle = ScalePageStyle;
 self.pageControl.numberOfPages = 5;
 self.pageControl.indicatorMargin = 5.0f;
 self.pageControl.indicatorMultiple = 1.6f;
@@ -34,7 +42,7 @@ self.pageControl.sourceScrollView = _collectionView;
 [self.view addSubview:_pageControl];
 ```
 
-If you want to scrollView to scroll to the non-adjacent location, Please realize the following protocol methods
+Use the ScalePageStyle, If you want to scrollView to scroll to the non-adjacent location, Please realize the following protocol methods
 
 ```
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;{

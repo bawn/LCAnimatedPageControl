@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, PageStyle){
+    ScalePageStyle,
+    SquirmPageStyle
+};
+
 @interface LCAnimatedPageControl : UIControl
 
 @property (nonatomic, strong) UIScrollView *sourceScrollView;
@@ -17,6 +22,7 @@
 @property (nonatomic, assign) CGFloat indicatorMultiple;
 @property (nonatomic, assign) CGFloat indicatorMargin;
 @property (nonatomic, assign) CGFloat indicatorDiameter;
+@property (nonatomic, assign) PageStyle pageStyle;
 @property (nonatomic, assign, readonly) NSInteger currentPage;
 
 - (void)prepareShow;

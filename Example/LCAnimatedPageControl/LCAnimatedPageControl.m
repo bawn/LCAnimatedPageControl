@@ -242,8 +242,8 @@ static CGFloat kLCHalfNumber = 0.5f;
             if (timeOffset - kLCHalfNumber <= 0.0f) {
                 newOffset = timeOffset * kLCDoubleNumber;
             }
-            else if (timeOffset - kLCHalfNumber){
-                newOffset = ABS(timeOffset - 1.0f) * kLCDoubleNumber;
+            else{
+                newOffset = (CGFloat)ABS(timeOffset - 1.0f) * kLCDoubleNumber;
             }
             CGFloat number = (_indicatorMargin - _indicatorDiameter) * kLCHalfNumber;
             self.squirmCenterCon.constant = rate  * kLCDoubleNumber * (_indicatorMargin - number) + _indicatorDiameter * kLCHalfNumber;

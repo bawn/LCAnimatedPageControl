@@ -235,7 +235,6 @@ static CGFloat kLCHalfNumber = 0.5f;
             
             currentPointView.layer.timeOffset = timeOffset;
             lastPointView.layer.timeOffset = 1.0f - timeOffset;
-            self.currentPage = currentIndex;
         }
         else if (_pageStyle == SquirmPageStyle){
             CGFloat newOffset;
@@ -249,7 +248,9 @@ static CGFloat kLCHalfNumber = 0.5f;
             self.squirmCenterCon.constant = rate  * kLCDoubleNumber * (_indicatorMargin - number) + _indicatorDiameter * kLCHalfNumber;
             self.squirmWidthCon.constant = newOffset * (_indicatorDiameter + _indicatorMargin);
         }
+        self.currentPage = currentIndex;
     }
+    
 }
 
 

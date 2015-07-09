@@ -165,7 +165,9 @@ static CGFloat kLCHalfNumber = 0.5f;
         [self.contentView addConstraint:_contentWidthCon];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
     }
-    [self layoutSquirmView];
+    if (_pageStyle == SquirmPageStyle) {
+        [self layoutSquirmView];
+    }
 }
 
 - (void)setDefaultIndicator{

@@ -133,6 +133,16 @@ static CGFloat kLCHalfNumber = 0.5f;
 }
 
 
+- (void)removeIndicatorsWithNumber:(NSInteger)number{
+    
+    NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(number))];
+    [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(number))]];
+    [self layoutContentView];
+}
+
+
+
 - (void)setCurrentPage:(NSInteger)currentPage{
     [self setCurrentPage:currentPage sendEvent:NO];
 }
@@ -157,10 +167,10 @@ static CGFloat kLCHalfNumber = 0.5f;
                 UIView *view = self.indicatorViews[_currentPage];
                 view.layer.timeOffset = 0.0f;
             }
-            NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(difference))];
-            [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(difference))]];
-            [self layoutContentView];
+            if (_currentPage > _numberOfPages - 1) {
+                _currentPage = _numberOfPages - 1;
+            }
+            [self removeIndicatorsWithNumber:difference];
         }
         // add
         else{
@@ -197,6 +207,11 @@ static CGFloat kLCHalfNumber = 0.5f;
     [self.indicatorViews.firstObject setBackgroundColor:_currentPageIndicatorColor];
     [self.contentView bringSubviewToFront:self.indicatorViews.firstObject];
     [self configScaleAnimation:depthView];
+    
+    for (NSInteger index = 1; index <= _currentPage; index ++) {
+        NSLayoutConstraint *con = self.indicatorCons[index];
+        con.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (index - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+    }
 }
 
 
@@ -259,7 +274,7 @@ static CGFloat kLCHalfNumber = 0.5f;
                 (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
                 newOffset.x != oldOffset.x &&
                 (NSInteger)ABS(newOffset.x - oldOffset.x)) {
-                
+                    
                 CGFloat oldRate = oldOffset.x / scrollViewWidth;
                 lastIndex = (NSInteger)ceilf(oldRate);
                 if (lastIndex <= _numberOfPages - 1) {
@@ -290,7 +305,7 @@ static CGFloat kLCHalfNumber = 0.5f;
             NSLayoutConstraint *currentCon = self.indicatorCons[currentIndex];
             NSLayoutConstraint *lastCon = self.indicatorCons[lastIndex];
             currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - timeOffset) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
-            lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 )- 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+            lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 ) - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
             
         }
         else if (_pageStyle == SquirmPageStyle){

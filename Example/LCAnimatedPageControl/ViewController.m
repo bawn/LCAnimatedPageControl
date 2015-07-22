@@ -31,7 +31,7 @@
     self.pageControl.numberOfPages = _number;
     self.pageControl.indicatorDiameter = 8.0f;
     self.pageControl.indicatorMargin = 20.0f;
-    self.pageControl.indicatorMultiple = 1.6;
+    self.pageControl.indicatorMultiple = 1.4;
     self.pageControl.pageStyle = DepthColorPageStyle;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
     self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
@@ -87,7 +87,6 @@
 }
 
 - (void)valueChanged:(LCAnimatedPageControl *)sender{
-    NSLog(@"%ld", (long)sender.currentPage);
     [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * sender.currentPage , self.collectionView.contentOffset.y) animated:YES];
 }
 

@@ -14,6 +14,7 @@ static CGFloat kLCHalfNumber = 0.5f;
 @interface LCAnimatedPageControl ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *indicatorViews;
+@property (nonatomic, strong) NSMutableArray *indicatorCons;
 @property (nonatomic, assign) NSInteger currentPage;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, assign) BOOL isDefaultSet;
@@ -53,6 +54,7 @@ static CGFloat kLCHalfNumber = 0.5f;
                            [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]
                            ]];
     _indicatorViews = [NSMutableArray array];
+    _indicatorCons = [NSMutableArray array];
     _numberOfPages = 0;
     _currentPage = 0;
     _pageIndicatorColor = [UIColor orangeColor];
@@ -74,8 +76,12 @@ static CGFloat kLCHalfNumber = 0.5f;
     [self.contentView addConstraint:_contentWidthCon];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
    
-    if (_pageStyle == ScalePageStyle) {
+    if (_pageStyle == ScaleColorPageStyle) {
         [self setDefaultIndicator];
+    }
+    else if (_pageStyle == DepthColorPageStyle){
+        [self.indicatorViews.firstObject setBackgroundColor:_currentPageIndicatorColor];
+        [self.contentView bringSubviewToFront:self.indicatorViews.firstObject];
     }
     else if(_pageStyle == SquirmPageStyle){
         self.squirmView = [[UIView alloc] init];
@@ -111,10 +117,30 @@ static CGFloat kLCHalfNumber = 0.5f;
         point.backgroundColor = _pageIndicatorColor;
         [self.contentView addSubview:point];
         [self.indicatorViews addObject:point];
-        [self configCSAnimation:point];
+        if (_pageStyle == ScaleColorPageStyle) {
+            [self configCSAnimation:point];
+        }
+        else if(_pageStyle == DepthColorPageStyle){
+            if (number == 0) {
+                [self configScaleAnimation:point];
+            }
+            else{
+                [self configSmallScaleAnimation:point];
+            }
+        }
     }
     [self layoutContentView];
 }
+
+
+- (void)removeIndicatorsWithNumber:(NSInteger)number{
+    
+    NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(number))];
+    [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(number))]];
+    [self layoutContentView];
+}
+
 
 
 - (void)setCurrentPage:(NSInteger)currentPage{
@@ -141,17 +167,21 @@ static CGFloat kLCHalfNumber = 0.5f;
                 UIView *view = self.indicatorViews[_currentPage];
                 view.layer.timeOffset = 0.0f;
             }
-            NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(difference))];
-            [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(difference))]];
-            [self layoutContentView];
+            if (_currentPage > _numberOfPages - 1) {
+                _currentPage = _numberOfPages - 1;
+            }
+            [self removeIndicatorsWithNumber:difference];
         }
         // add
         else{
             [self addIndicatorsWithIndex:lastNumberPages];
         }
         [self resetContentLayout];
-        if (_pageStyle == ScalePageStyle) {
+        if (_pageStyle == ScaleColorPageStyle) {
+            [self setDefaultIndicator];
+        }
+        if (_pageStyle == DepthColorPageStyle) {
+            [self configDepthView];
             [self setDefaultIndicator];
         }
     }
@@ -170,6 +200,21 @@ static CGFloat kLCHalfNumber = 0.5f;
     }
 }
 
+
+- (void)configDepthView{
+    UIView *depthView = self.indicatorViews.firstObject;
+    [depthView.layer removeAllAnimations];
+    [self.indicatorViews.firstObject setBackgroundColor:_currentPageIndicatorColor];
+    [self.contentView bringSubviewToFront:self.indicatorViews.firstObject];
+    [self configScaleAnimation:depthView];
+    
+    for (NSInteger index = 1; index <= _currentPage; index ++) {
+        NSLayoutConstraint *con = self.indicatorCons[index];
+        con.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (index - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+    }
+}
+
+
 - (void)setDefaultIndicator{
     self.isDefaultSet = YES;
     if (self.indicatorViews.count) {
@@ -183,7 +228,12 @@ static CGFloat kLCHalfNumber = 0.5f;
             }
             UIView *pointView = self.indicatorViews[currentIndex];
             self.currentPage = currentIndex;
-            pointView.layer.timeOffset = 1.0f;
+            if (_pageStyle == ScaleColorPageStyle) {
+                pointView.layer.timeOffset = 1.0f;
+            }
+            else if (_pageStyle == DepthColorPageStyle){
+                pointView.layer.timeOffset = 0.0f;
+            }
             self.isDefaultSet = NO;
         });
     }
@@ -208,6 +258,7 @@ static CGFloat kLCHalfNumber = 0.5f;
         if (currentIndex == lastIndex && currentIndex >= 1) {
             lastIndex -= 1;
         }
+        
         UIView *currentPointView = self.indicatorViews[currentIndex];
         UIView *lastPointView = self.indicatorViews[lastIndex];
         CGFloat timeOffset = rate - floorf(rate);
@@ -215,7 +266,7 @@ static CGFloat kLCHalfNumber = 0.5f;
             timeOffset = 1.0f;
         }
         
-        if (_pageStyle == ScalePageStyle) {
+        if (_pageStyle == ScaleColorPageStyle) {
             if (!_sourceScrollView.decelerating && _isDefaultSet) {
                 return;
             }
@@ -223,7 +274,7 @@ static CGFloat kLCHalfNumber = 0.5f;
                 (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
                 newOffset.x != oldOffset.x &&
                 (NSInteger)ABS(newOffset.x - oldOffset.x)) {
-                
+                    
                 CGFloat oldRate = oldOffset.x / scrollViewWidth;
                 lastIndex = (NSInteger)ceilf(oldRate);
                 if (lastIndex <= _numberOfPages - 1) {
@@ -234,21 +285,41 @@ static CGFloat kLCHalfNumber = 0.5f;
                 }
                 return;
             }
-            
             currentPointView.layer.timeOffset = timeOffset;
             lastPointView.layer.timeOffset = 1.0f - timeOffset;
+           
         }
-        else if (_pageStyle == SquirmPageStyle){
-            CGFloat newOffset;
+        else if (_pageStyle == DepthColorPageStyle){
+            UIView *lastPointView = self.indicatorViews.firstObject;
+            lastIndex = 0;
+            CGFloat halfTimeOffset = 0.0f;
             if (timeOffset - kLCHalfNumber <= 0.0f) {
-                newOffset = timeOffset * kLCDoubleNumber;
+                halfTimeOffset = timeOffset * kLCDoubleNumber;
             }
             else{
-                newOffset = (CGFloat)ABS(timeOffset - 1.0f) * kLCDoubleNumber;
+                halfTimeOffset = (CGFloat)ABS(timeOffset - 1.0f) * kLCDoubleNumber;
+            }
+           
+            currentPointView.layer.timeOffset = halfTimeOffset;
+            lastPointView.layer.timeOffset = halfTimeOffset;
+            NSLayoutConstraint *currentCon = self.indicatorCons[currentIndex];
+            NSLayoutConstraint *lastCon = self.indicatorCons[lastIndex];
+            currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - timeOffset) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+            lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 ) - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+            
+        }
+        else if (_pageStyle == SquirmPageStyle){
+            
+            if (timeOffset - kLCHalfNumber <= 0.0f) {
+                timeOffset = timeOffset * kLCDoubleNumber;
+            }
+            else{
+                timeOffset = (CGFloat)ABS(timeOffset - 1.0f) * kLCDoubleNumber;
             }
             CGFloat number = (_indicatorMargin - _indicatorDiameter) * kLCHalfNumber;
             self.squirmCenterCon.constant = rate  * kLCDoubleNumber * (_indicatorMargin - number) + _indicatorDiameter * kLCHalfNumber;
-            self.squirmWidthCon.constant = newOffset * (_indicatorDiameter + _indicatorMargin);
+            self.squirmWidthCon.constant = timeOffset * (_indicatorDiameter + _indicatorMargin);
+            
         }
         self.currentPage = currentIndex;
     }
@@ -273,24 +344,22 @@ static CGFloat kLCHalfNumber = 0.5f;
 }
 
 
-
 - (void)layoutContentView{
+    [self.indicatorCons removeAllObjects];
     [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [view removeConstraints:view.constraints];
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+        // size
         [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:_indicatorDiameter]];
         [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
         
-        if (idx) {
-            UIView *lastView = self.indicatorViews[idx - 1];
-            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:lastView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:_indicatorMargin + _indicatorMultiple * _indicatorDiameter]];
-        }
-        else{
-            [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple * kLCHalfNumber]];
-        }
+        // position
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+        NSLayoutConstraint *con = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:(_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + idx * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin)];
+        [self.indicatorCons addObject:con];
+        [self.contentView addConstraint:con];
     }];
-
+    
 }
 
 
@@ -307,6 +376,7 @@ static CGFloat kLCHalfNumber = 0.5f;
     changeColor.duration  = 1.0;
     changeColor.removedOnCompletion = NO;
     [view.layer addAnimation:changeColor forKey:@"Change color"];
+    view.layer.speed = 0.0;
 }
 
 - (void)configScaleAnimation:(UIView *)view{
@@ -319,18 +389,32 @@ static CGFloat kLCHalfNumber = 0.5f;
     view.layer.speed = 0.0;
 }
 
+- (void)configSmallScaleAnimation:(UIView *)view{
+    CABasicAnimation *changeScale = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    changeScale.fromValue = @1.0f;
+    changeScale.toValue = @(1/_indicatorMultiple);
+    changeScale.duration  = 1.0;
+    changeScale.removedOnCompletion = NO;
+    [view.layer addAnimation:changeScale forKey:@"Change cale small"];
+    view.layer.speed = 0.0;
+}
+
+
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesEnded:touches withEvent:event];
-    CGFloat multipleRadius = _indicatorMultiple * kLCHalfNumber * _indicatorDiameter;
+    CGFloat multipleRadius = _indicatorMultiple * _indicatorDiameter * (1 + kLCHalfNumber) + _indicatorMargin;
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.contentView];
-    UIView *pointView = _indicatorViews[_currentPage];
-    if (point.x > pointView.center.x + multipleRadius) {
+    
+    NSInteger pageNumber = (NSInteger)ceilf((point.x / multipleRadius));
+    if (pageNumber > _currentPage) {
         self.currentPage++;
     }
-    else if (point.x < pointView.center.x  - multipleRadius){
-        self.currentPage--;
+    else{
+        if (_currentPage) {
+            self.currentPage--;
+        }
     }
     [self setCurrentPage:_currentPage sendEvent:YES];
 }

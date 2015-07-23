@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, PageStyle){
-    ScalePageStyle,
-    SquirmPageStyle
+    ScaleColorPageStyle,
+    SquirmPageStyle,
+    DepthColorPageStyle
 };
 
 @interface LCAnimatedPageControl : UIControl

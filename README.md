@@ -9,11 +9,11 @@ Custom UIPageControl with a simple animation, Support AtuoLayout.
 
 ##Demo
 
-**ScaleColorPageStyle**
+**SquirmPageStyle**
 
 ![1](demo1.gif)
 
-**SquirmPageStyle**
+**ScaleColorPageStyle**
 
 ![2](demo2.gif)
 

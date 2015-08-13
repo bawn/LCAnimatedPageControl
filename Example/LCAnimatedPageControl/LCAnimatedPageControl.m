@@ -76,14 +76,14 @@ static CGFloat kLCHalfNumber = 0.5f;
     [self.contentView addConstraint:_contentWidthCon];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
    
-    if (_pageStyle == ScaleColorPageStyle) {
-        [self setDefaultIndicator];
+    if (_pageStyle == LCScaleColorPageStyle) {
+        [self configDefaultIndicator];
     }
-    else if (_pageStyle == DepthColorPageStyle){
+    else if (_pageStyle == LCDepthColorPageStyle){
         [self.indicatorViews.firstObject setBackgroundColor:_currentPageIndicatorColor];
         [self.contentView bringSubviewToFront:self.indicatorViews.firstObject];
     }
-    else if(_pageStyle == SquirmPageStyle){
+    else if(_pageStyle == LCSquirmPageStyle){
         self.squirmView = [[UIView alloc] init];
         self.squirmView.translatesAutoresizingMaskIntoConstraints = NO;
         self.squirmView .clipsToBounds = YES;
@@ -92,6 +92,9 @@ static CGFloat kLCHalfNumber = 0.5f;
         [self.contentView addSubview:_squirmView];
         
         [self layoutSquirmView];
+    }
+    else if (_pageStyle == LCSingleLinePageStyle){
+        
     }
 }
 
@@ -111,22 +114,25 @@ static CGFloat kLCHalfNumber = 0.5f;
 
 - (void)addIndicatorsWithIndex:(NSInteger)index{
     for (NSInteger number = index; number < _numberOfPages; number ++ ) {
-        UIView *point = [[UIView alloc] init];
-        point.clipsToBounds = YES;
-        point.layer.cornerRadius = _radius;
-        point.backgroundColor = _pageIndicatorColor;
-        [self.contentView addSubview:point];
-        [self.indicatorViews addObject:point];
-        if (_pageStyle == ScaleColorPageStyle) {
-            [self configCSAnimation:point];
+        UIView *indicator = [[UIView alloc] init];
+        indicator.clipsToBounds = YES;
+        indicator.layer.cornerRadius = _radius;
+        indicator.backgroundColor = _pageIndicatorColor;
+        [self.contentView addSubview:indicator];
+        [self.indicatorViews addObject:indicator];
+        if (_pageStyle == LCScaleColorPageStyle) {
+            [self configCSAnimation:indicator];
         }
-        else if(_pageStyle == DepthColorPageStyle){
+        else if(_pageStyle == LCDepthColorPageStyle){
             if (number == 0) {
-                [self configScaleAnimation:point];
+                [self configScaleAnimation:indicator];
             }
             else{
-                [self configSmallScaleAnimation:point];
+                [self configSmallScaleAnimation:indicator];
             }
+        }
+        else if (_pageStyle == LCSingleLinePageStyle){
+            [self configCircleLayer:indicator];
         }
     }
     [self layoutContentView];
@@ -177,12 +183,12 @@ static CGFloat kLCHalfNumber = 0.5f;
             [self addIndicatorsWithIndex:lastNumberPages];
         }
         [self resetContentLayout];
-        if (_pageStyle == ScaleColorPageStyle) {
-            [self setDefaultIndicator];
+        if (_pageStyle == LCScaleColorPageStyle) {
+            [self configDefaultIndicator];
         }
-        if (_pageStyle == DepthColorPageStyle) {
+        if (_pageStyle == LCDepthColorPageStyle) {
             [self configDepthView];
-            [self setDefaultIndicator];
+            [self configDefaultIndicator];
         }
     }
 }
@@ -195,7 +201,7 @@ static CGFloat kLCHalfNumber = 0.5f;
         [self.contentView addConstraint:_contentWidthCon];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
     }
-    if (_pageStyle == SquirmPageStyle) {
+    if (_pageStyle == LCSquirmPageStyle) {
         [self layoutSquirmView];
     }
 }
@@ -215,7 +221,7 @@ static CGFloat kLCHalfNumber = 0.5f;
 }
 
 
-- (void)setDefaultIndicator{
+- (void)configDefaultIndicator{
     self.isDefaultSet = YES;
     if (self.indicatorViews.count) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -228,10 +234,10 @@ static CGFloat kLCHalfNumber = 0.5f;
             }
             UIView *pointView = self.indicatorViews[currentIndex];
             self.currentPage = currentIndex;
-            if (_pageStyle == ScaleColorPageStyle) {
+            if (_pageStyle == LCScaleColorPageStyle) {
                 pointView.layer.timeOffset = 1.0f;
             }
-            else if (_pageStyle == DepthColorPageStyle){
+            else if (_pageStyle == LCDepthColorPageStyle){
                 pointView.layer.timeOffset = 0.0f;
             }
             self.isDefaultSet = NO;
@@ -266,7 +272,7 @@ static CGFloat kLCHalfNumber = 0.5f;
             timeOffset = 1.0f;
         }
         
-        if (_pageStyle == ScaleColorPageStyle) {
+        if (_pageStyle == LCScaleColorPageStyle) {
             if (!_sourceScrollView.decelerating && _isDefaultSet) {
                 return;
             }
@@ -289,7 +295,7 @@ static CGFloat kLCHalfNumber = 0.5f;
             lastPointView.layer.timeOffset = 1.0f - timeOffset;
            
         }
-        else if (_pageStyle == DepthColorPageStyle){
+        else if (_pageStyle == LCDepthColorPageStyle){
             UIView *lastPointView = self.indicatorViews.firstObject;
             lastIndex = 0;
             CGFloat halfTimeOffset = 0.0f;
@@ -308,7 +314,7 @@ static CGFloat kLCHalfNumber = 0.5f;
             lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 ) - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
             
         }
-        else if (_pageStyle == SquirmPageStyle){
+        else if (_pageStyle == LCSquirmPageStyle){
             
             if (timeOffset - kLCHalfNumber <= 0.0f) {
                 timeOffset = timeOffset * kLCDoubleNumber;
@@ -398,6 +404,33 @@ static CGFloat kLCHalfNumber = 0.5f;
     [view.layer addAnimation:changeScale forKey:@"Change cale small"];
     view.layer.speed = 0.0;
 }
+
+- (void)configCircleLayer:(UIView *)view{
+//    UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, _indicatorDiameter, _indicatorDiameter)];
+//    CAShapeLayer *circleLayer = [CAShapeLayer layer];
+//    circleLayer.fillColor = [UIColor clearColor].CGColor;
+//    circleLayer.lineWidth = 1;
+//    circleLayer.strokeColor = _currentPageIndicatorColor.CGColor;
+////    circleLayer.strokeEnd = 1.0f;
+//    circleLayer.path = circlePath.CGPath;
+//    [view.layer addSublayer:circleLayer];
+    
+    
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(CGRectMake(0, 0, _indicatorDiameter, _indicatorDiameter), 1, 2)];
+    CAShapeLayer *circleLayer = [CAShapeLayer layer];
+    circleLayer.fillColor = [UIColor redColor].CGColor;
+    circleLayer.lineWidth = 1;
+//    circleLayer.strokeColor = _currentPageIndicatorColor.CGColor;
+    //    circleLayer.strokeEnd = 1.0f;
+    circleLayer.path = circlePath.CGPath;
+    [view.layer addSublayer:circleLayer];
+
+    view.layer.mask = circleLayer;
+    
+    
+    
+}
+
 
 
 

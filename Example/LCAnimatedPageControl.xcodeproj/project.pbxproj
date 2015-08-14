@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A12C58F1B7DDC31003BA91F /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A12C58E1B7DDC31003BA91F /* IndicatorView.m */; };
 		7A68D8A31B450433004B77B9 /* LCAnimatedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */; };
 		7A68D8A41B450433004B77B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A21B450433004B77B9 /* ViewController.m */; };
 		7A7420D91B3149EC00B30BEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7420D81B3149EC00B30BEA /* main.m */; };
@@ -28,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A12C58D1B7DDC31003BA91F /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorView.h; sourceTree = "<group>"; };
+		7A12C58E1B7DDC31003BA91F /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorView.m; sourceTree = "<group>"; };
 		7A68D89F1B450433004B77B9 /* LCAnimatedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCAnimatedPageControl.h; sourceTree = "<group>"; };
 		7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAnimatedPageControl.m; sourceTree = "<group>"; };
 		7A68D8A11B450433004B77B9 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -86,6 +89,8 @@
 			children = (
 				7A68D89F1B450433004B77B9 /* LCAnimatedPageControl.h */,
 				7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */,
+				7A12C58D1B7DDC31003BA91F /* IndicatorView.h */,
+				7A12C58E1B7DDC31003BA91F /* IndicatorView.m */,
 				7A68D8A11B450433004B77B9 /* ViewController.h */,
 				7A68D8A21B450433004B77B9 /* ViewController.m */,
 				7A7420DA1B3149EC00B30BEA /* AppDelegate.h */,
@@ -224,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A12C58F1B7DDC31003BA91F /* IndicatorView.m in Sources */,
 				7A7420DC1B3149EC00B30BEA /* AppDelegate.m in Sources */,
 				7A68D8A31B450433004B77B9 /* LCAnimatedPageControl.m in Sources */,
 				7A68D8A41B450433004B77B9 /* ViewController.m in Sources */,

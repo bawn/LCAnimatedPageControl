@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "LCAnimatedPageControl.h"
+#import "IndicatorView.h"
 
 @interface ViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -32,7 +33,7 @@
     self.pageControl.indicatorDiameter = 10.0f;
     self.pageControl.indicatorMargin = 20.0f;
 //    self.pageControl.indicatorMultiple = 1.4;
-    self.pageControl.pageStyle = LCSingleLinePageStyle;
+    self.pageControl.pageStyle = LCFillColorPageStyle;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
     self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
     self.pageControl.sourceScrollView = _collectionView;
@@ -61,14 +62,25 @@
 //                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0f],
 //                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0f],
 //                                ]];
-//    
+//
 //    [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
     
     self.flowLayout.itemSize = CGSizeMake(self.collectionView.frame.size.width - 60, self.collectionView.frame.size.height - 100);
-    
     [self.pageControl addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    
     [self.collectionView reloadData];
+    
+    
+//    
+//    IndicatorView *view = [[IndicatorView alloc] init];
+//    view.translatesAutoresizingMaskIntoConstraints = NO;
+//    view.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:view];
+//    
+//    
+//    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(view);
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[view]-0-|" options:0 metrics:nil views:viewsDictionary]];
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[view]-0-|" options:0 metrics:nil views:viewsDictionary]];
+
     
 }
 

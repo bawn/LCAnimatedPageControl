@@ -7,6 +7,7 @@
 //
 
 #import "LCAnimatedPageControl.h"
+#import "IndicatorView.h"
 
 static CGFloat kLCDoubleNumber = 2.0f;
 static CGFloat kLCHalfNumber = 0.5f;
@@ -67,7 +68,6 @@ static CGFloat kLCHalfNumber = 0.5f;
 
 - (void)prepareShow{
 
-
     [self addIndicatorsWithIndex:0];
     [self.sourceScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
     
@@ -96,6 +96,9 @@ static CGFloat kLCHalfNumber = 0.5f;
     else if (_pageStyle == LCSingleLinePageStyle){
         
     }
+    else if (_pageStyle == LCFillColorPageStyle){
+        [self configDefaultIndicator];
+    }
 }
 
 
@@ -114,10 +117,22 @@ static CGFloat kLCHalfNumber = 0.5f;
 
 - (void)addIndicatorsWithIndex:(NSInteger)index{
     for (NSInteger number = index; number < _numberOfPages; number ++ ) {
-        UIView *indicator = [[UIView alloc] init];
+        
+        UIView *indicator = nil;
+        if (_pageStyle == LCFillColorPageStyle) {
+            indicator = [[IndicatorView alloc] init];
+            [(IndicatorView *)indicator backView].backgroundColor = _currentPageIndicatorColor;
+            [(IndicatorView *)indicator frontView].backgroundColor = _pageIndicatorColor;
+            [self configScaleAnimation:[(IndicatorView *)indicator backView]];
+            [self configScaleAnimation:[(IndicatorView *)indicator frontView]];
+        }
+        else{
+            indicator = [[UIView alloc] init];
+            indicator.backgroundColor = _pageIndicatorColor;
+        }
         indicator.clipsToBounds = YES;
         indicator.layer.cornerRadius = _radius;
-        indicator.backgroundColor = _pageIndicatorColor;
+        
         [self.contentView addSubview:indicator];
         [self.indicatorViews addObject:indicator];
         if (_pageStyle == LCScaleColorPageStyle) {
@@ -132,7 +147,7 @@ static CGFloat kLCHalfNumber = 0.5f;
             }
         }
         else if (_pageStyle == LCSingleLinePageStyle){
-            [self configCircleLayer:indicator];
+//            [self configCircleLayer:indicator];
         }
     }
     [self layoutContentView];
@@ -239,6 +254,9 @@ static CGFloat kLCHalfNumber = 0.5f;
             }
             else if (_pageStyle == LCDepthColorPageStyle){
                 pointView.layer.timeOffset = 0.0f;
+            }
+            else if (_pageStyle == LCFillColorPageStyle){
+                [(IndicatorView *)pointView backView].layer.timeOffset = 1.0f;
             }
             self.isDefaultSet = NO;
         });
@@ -354,7 +372,7 @@ static CGFloat kLCHalfNumber = 0.5f;
     [self.indicatorCons removeAllObjects];
     [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
-        [view removeConstraints:view.constraints];
+//        [view removeConstraints:view.constraints];
         // size
         [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:_indicatorDiameter]];
         [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];

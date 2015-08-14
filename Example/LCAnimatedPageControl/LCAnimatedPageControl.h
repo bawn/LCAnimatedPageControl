@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, PageStyle){
     LCSquirmPageStyle,
     LCDepthColorPageStyle,
     LCSingleLinePageStyle,
+    LCFillColorPageStyle,
 };
 
 @interface LCAnimatedPageControl : UIControl

@@ -12,7 +12,6 @@ typedef NS_ENUM(NSInteger, PageStyle){
     LCScaleColorPageStyle,
     LCSquirmPageStyle,
     LCDepthColorPageStyle,
-    LCSingleLinePageStyle,
     LCFillColorPageStyle,
 };
 

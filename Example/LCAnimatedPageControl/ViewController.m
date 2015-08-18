@@ -31,7 +31,7 @@
     self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
     self.pageControl.numberOfPages = _number;
     self.pageControl.indicatorDiameter = 10.0f;
-    self.pageControl.indicatorMargin = 20.0f;
+    self.pageControl.indicatorMargin = 16.0f;
     self.pageControl.indicatorMultiple = 1.4;
     self.pageControl.pageStyle = LCDepthColorPageStyle;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
@@ -63,13 +63,13 @@
 //                                [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0f],
 //                                ]];
 //
-//    [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width, 0)];
+//    [self.collectionView setContentOffset:CGPointMake(self.collectionView.bounds.size.width * 2, 0)];
     
     self.flowLayout.itemSize = CGSizeMake(self.collectionView.frame.size.width - 60, self.collectionView.frame.size.height - 100);
     [self.pageControl addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.collectionView reloadData];
     
-    
+
 //    
 //    IndicatorView *view = [[IndicatorView alloc] init];
 //    view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -99,7 +99,8 @@
 }
 
 - (void)valueChanged:(LCAnimatedPageControl *)sender{
-    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * (sender.currentPage + 0)  , self.collectionView.contentOffset.y) animated:YES];
+//    NSLog(@"%d", sender.currentPage);
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * (sender.currentPage + 0)  , self.collectionView.contentOffset.y) animated:NO];
 }
 
 - (IBAction)buttonPress:(id)sender{

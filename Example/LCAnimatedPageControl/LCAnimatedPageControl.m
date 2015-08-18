@@ -67,8 +67,8 @@ static CGFloat kLCMultiple = 1.4f;
     _indicatorMargin = 0.0f;
     _radius = _indicatorDiameter * kLCHalfNumber;
     
-    _contentView.backgroundColor = [UIColor orangeColor];
-    self.backgroundColor = [UIColor blackColor];
+//    _contentView.backgroundColor = [UIColor orangeColor];
+//    self.backgroundColor = [UIColor blackColor];
 }
 
 - (void)prepareShow{
@@ -85,6 +85,7 @@ static CGFloat kLCMultiple = 1.4f;
         [self configDefaultIndicator];
     }
     else if (_pageStyle == LCDepthColorPageStyle){
+        [self configDefaultIndicator];
         [self.indicatorViews.firstObject setBackgroundColor:_currentPageIndicatorColor];
         [self.contentView bringSubviewToFront:self.indicatorViews.firstObject];
     }
@@ -261,6 +262,12 @@ static CGFloat kLCMultiple = 1.4f;
             }
             else if (_pageStyle == LCDepthColorPageStyle){
                 self.currentView.layer.timeOffset = 0.0f;
+                if (currentIndex) {
+                    NSLayoutConstraint *currentCon = self.indicatorCons[currentIndex];
+                    NSLayoutConstraint *lastCon = self.indicatorCons.firstObject;
+                    currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber);
+                    lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + currentIndex * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+                }
             }
             else if (_pageStyle == LCFillColorPageStyle){
                 [(IndicatorView *)self.currentView frontView].layer.timeOffset = 1.0f;
@@ -296,35 +303,38 @@ static CGFloat kLCMultiple = 1.4f;
         if (timeOffset == 0.0f && currentIndex) {
             timeOffset = 1.0f;
         }
+        
+        BOOL isNoAnimationScroll = NO;
+        if ((NSInteger)newOffset.x % (NSInteger)scrollViewWidth == 0 &&
+            (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
+            newOffset.x != oldOffset.x &&
+            (NSInteger)ABS(newOffset.x - oldOffset.x)) {
+            
+            CGFloat oldRate = oldOffset.x / scrollViewWidth;
+            lastIndex = (NSInteger)ceilf(oldRate);
+            if (lastIndex <= _numberOfPages - 1) {
+                lastPointView = self.indicatorViews[lastIndex];
+                isNoAnimationScroll = YES;
+            }
+            
+        }
+        if (!_sourceScrollView.decelerating && _isDefaultSet) {
+            return;
+        }
+        
         if (_pageStyle == LCScaleColorPageStyle) {
             
-            if (!_sourceScrollView.decelerating && _isDefaultSet) {
-                return;
+            if (isNoAnimationScroll) {
+                currentPointView.layer.timeOffset = 1.0f;
+                lastPointView.layer.timeOffset = 0.0f;
             }
-        
-            if ((NSInteger)newOffset.x % (NSInteger)scrollViewWidth == 0 &&
-                (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
-                newOffset.x != oldOffset.x &&
-                (NSInteger)ABS(newOffset.x - oldOffset.x)) {
-                
-                CGFloat oldRate = oldOffset.x / scrollViewWidth;
-                lastIndex = (NSInteger)ceilf(oldRate);
-                
-                if (lastIndex <= _numberOfPages - 1) {
-                    lastPointView = self.indicatorViews[lastIndex];
-                    currentPointView.layer.timeOffset = 1.0f;
-                    lastPointView.layer.timeOffset = 0.0f;
-                    self.currentPage = currentIndex;
-                }
-                return;
+            else{
+                currentPointView.layer.timeOffset = timeOffset;
+                lastPointView.layer.timeOffset = 1.0f - timeOffset;
             }
-
-            
-            currentPointView.layer.timeOffset = timeOffset;
-            lastPointView.layer.timeOffset = 1.0f - timeOffset;
-           
         }
         else if (_pageStyle == LCDepthColorPageStyle){
+            
             UIView *lastPointView = self.indicatorViews.firstObject;
             lastIndex = 0;
             CGFloat halfTimeOffset = 0.0f;
@@ -334,14 +344,20 @@ static CGFloat kLCMultiple = 1.4f;
             else{
                 halfTimeOffset = (CGFloat)ABS(timeOffset - 1.0f) * kLCDoubleNumber;
             }
-           
+            
             currentPointView.layer.timeOffset = halfTimeOffset;
             lastPointView.layer.timeOffset = halfTimeOffset;
             NSLayoutConstraint *currentCon = self.indicatorCons[currentIndex];
             NSLayoutConstraint *lastCon = self.indicatorCons[lastIndex];
-            currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - timeOffset) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+            if (isNoAnimationScroll) {
+                CGFloat oldRate = oldOffset.x / scrollViewWidth;
+                lastIndex = (NSInteger)ceilf(oldRate);
+                if (lastIndex > currentIndex) {
+                    currentCon = self.indicatorCons[currentIndex + 1];
+                }
+            }
+            currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - (lastIndex > currentIndex ? -1 : 1)) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
             lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 ) - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
-            
         }
         else if (_pageStyle == LCSquirmPageStyle){
             
@@ -468,35 +484,19 @@ static CGFloat kLCMultiple = 1.4f;
 }
 
 
-
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesEnded:touches withEvent:event];
-    CGFloat multipleRadius =  _indicatorMultiple * _indicatorDiameter * (1 + kLCHalfNumber) + _indicatorMargin;
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.contentView];
-    NSLog(@"%@", _currentView);
-    if (CGRectContainsPoint(_currentView.frame, point)) {
-        
+    CGFloat currentX = (_indicatorMultiple * _indicatorDiameter + _indicatorMargin) * _currentPage + _indicatorMultiple * _indicatorDiameter * kLCHalfNumber;
+    if (point.x > currentX) {
+        self.currentPage++;
     }
     else{
-        if (point.x > _currentView.frame.origin.x) {
-            self.currentPage++;
-        }
-        else{
+        if (_currentPage) {
             self.currentPage--;
         }
     }
-    
-//    NSInteger pageNumber = (NSInteger)((point.x / multipleRadius));
-//    if (pageNumber > _currentPage) {
-//        self.currentPage++;
-//    }
-//    else{
-//        if (_currentPage) {
-//            self.currentPage--;
-//        }
-//    }
     [self setCurrentPage:_currentPage sendEvent:YES];
 }
 

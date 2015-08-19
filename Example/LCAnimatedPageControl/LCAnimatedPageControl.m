@@ -67,8 +67,8 @@ static CGFloat kLCMultiple = 1.4f;
     _indicatorMargin = 0.0f;
     _radius = _indicatorDiameter * kLCHalfNumber;
     
-//    _contentView.backgroundColor = [UIColor orangeColor];
-//    self.backgroundColor = [UIColor blackColor];
+    _contentView.backgroundColor = [UIColor orangeColor];
+    self.backgroundColor = [UIColor blackColor];
 }
 
 - (void)prepareShow{
@@ -163,7 +163,6 @@ static CGFloat kLCMultiple = 1.4f;
 
 
 - (void)removeIndicatorsWithNumber:(NSInteger)number{
-    
     NSArray *array = [self.indicatorViews subarrayWithRange:NSMakeRange(0, ABS(number))];
     [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.indicatorViews removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, ABS(number))]];
@@ -211,7 +210,7 @@ static CGFloat kLCMultiple = 1.4f;
         }
         if (_pageStyle == LCDepthColorPageStyle) {
             [self configDepthView];
-            [self configDefaultIndicator];
+//            [self configDefaultIndicator];
         }
     }
 }
@@ -233,8 +232,8 @@ static CGFloat kLCMultiple = 1.4f;
 - (void)configDepthView{
     UIView *depthView = self.indicatorViews.firstObject;
     [depthView.layer removeAllAnimations];
-    [self.indicatorViews.firstObject setBackgroundColor:_currentPageIndicatorColor];
-    [self.contentView bringSubviewToFront:self.indicatorViews.firstObject];
+    depthView.backgroundColor = _currentPageIndicatorColor;
+    [self.contentView bringSubviewToFront:depthView];
     [self configScaleAnimation:depthView];
     
     for (NSInteger index = 1; index <= _currentPage; index ++) {
@@ -355,8 +354,12 @@ static CGFloat kLCMultiple = 1.4f;
                 if (lastIndex > currentIndex) {
                     currentCon = self.indicatorCons[currentIndex + 1];
                 }
+                currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - (lastIndex > currentIndex ? -1 : 1)) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
             }
-            currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - (lastIndex > currentIndex ? -1 : 1)) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+            else{
+                currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - timeOffset) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
+            }
+           
             lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 ) - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
         }
         else if (_pageStyle == LCSquirmPageStyle){

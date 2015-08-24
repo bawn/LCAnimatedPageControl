@@ -30,10 +30,10 @@
     self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
     self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
     self.pageControl.numberOfPages = _number;
-    self.pageControl.indicatorDiameter = 10.0f;
-    self.pageControl.indicatorMargin = 16.0f;
+    self.pageControl.indicatorDiameter = 8.0f;
+    self.pageControl.indicatorMargin = 10.0f;
     self.pageControl.indicatorMultiple = 1.4;
-    self.pageControl.pageStyle = LCDepthColorPageStyle;
+    self.pageControl.pageStyle = LCFillColorPageStyle;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
     self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
     self.pageControl.sourceScrollView = _collectionView;
@@ -100,7 +100,7 @@
 
 - (void)valueChanged:(LCAnimatedPageControl *)sender{
 //    NSLog(@"%d", sender.currentPage);
-    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * (sender.currentPage + 0)  , self.collectionView.contentOffset.y) animated:NO];
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.frame.size.width * (sender.currentPage + 0)  , self.collectionView.contentOffset.y) animated:YES];
 }
 
 - (IBAction)buttonPress:(id)sender{

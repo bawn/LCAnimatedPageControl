@@ -25,7 +25,6 @@ static CGFloat kLCMultiple = 1.4f;
 @property (nonatomic, strong) NSLayoutConstraint *squirmCenterCon;
 @property (nonatomic, strong) NSLayoutConstraint *squirmWidthCon;
 @property (nonatomic, strong) UIView *squirmView;
-@property (nonatomic, strong) UIView *currentView;
 
 @end
 
@@ -67,15 +66,12 @@ static CGFloat kLCMultiple = 1.4f;
     _indicatorMargin = 0.0f;
     _radius = _indicatorDiameter * kLCHalfNumber;
     
-    _contentView.backgroundColor = [UIColor orangeColor];
-    self.backgroundColor = [UIColor blackColor];
 }
 
 - (void)prepareShow{
 
     [self addIndicatorsWithIndex:0];
     [self.sourceScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
-    
     CGFloat viewWidth = (_indicatorDiameter * _indicatorMultiple) * _numberOfPages + (_numberOfPages - 1) * _indicatorMargin;
     self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
     [self.contentView addConstraint:_contentWidthCon];
@@ -170,7 +166,6 @@ static CGFloat kLCMultiple = 1.4f;
 }
 
 
-
 - (void)setCurrentPage:(NSInteger)currentPage{
     [self setCurrentPage:currentPage sendEvent:NO];
 }
@@ -192,8 +187,7 @@ static CGFloat kLCMultiple = 1.4f;
         // remove
         if (difference < 0) {
             if (_currentPage != lastNumberPages - 1) {
-                UIView *view = self.indicatorViews[_currentPage];
-                view.layer.timeOffset = 0.0f;
+                [self configCurrentIndicator];
             }
             if (_currentPage > _numberOfPages - 1) {
                 _currentPage = _numberOfPages - 1;
@@ -205,13 +199,22 @@ static CGFloat kLCMultiple = 1.4f;
             [self addIndicatorsWithIndex:lastNumberPages];
         }
         [self resetContentLayout];
-        if (_pageStyle == LCScaleColorPageStyle) {
-            [self configDefaultIndicator];
-        }
         if (_pageStyle == LCDepthColorPageStyle) {
             [self configDepthView];
-//            [self configDefaultIndicator];
         }
+        else if (_pageStyle == LCSquirmPageStyle) {
+            [self layoutSquirmView];
+        }
+    }
+}
+
+- (void)configCurrentIndicator{
+    UIView *view = self.indicatorViews[_currentPage];
+    if ([view isKindOfClass:[IndicatorView class]]) {
+        [(IndicatorView *)view frontView].layer.timeOffset = 1.0f;
+    }
+    else{
+        view.layer.timeOffset = 0.0f;
     }
 }
 
@@ -222,9 +225,6 @@ static CGFloat kLCMultiple = 1.4f;
         self.contentWidthCon = [NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:viewWidth];
         [self.contentView addConstraint:_contentWidthCon];
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:_indicatorDiameter * _indicatorMultiple]];
-    }
-    if (_pageStyle == LCSquirmPageStyle) {
-        [self layoutSquirmView];
     }
 }
 
@@ -254,13 +254,13 @@ static CGFloat kLCMultiple = 1.4f;
             if (currentIndex > self.numberOfPages - 1) {
                 currentIndex --;
             }
-            self.currentView = self.indicatorViews[currentIndex];
+            UIView *currentIndicator = self.indicatorViews[currentIndex];
             self.currentPage = currentIndex;
             if (_pageStyle == LCScaleColorPageStyle) {
-                self.currentView.layer.timeOffset = 1.0f;
+                currentIndicator.layer.timeOffset = 1.0f;
             }
             else if (_pageStyle == LCDepthColorPageStyle){
-                self.currentView.layer.timeOffset = 0.0f;
+                currentIndicator.layer.timeOffset = 0.0f;
                 if (currentIndex) {
                     NSLayoutConstraint *currentCon = self.indicatorCons[currentIndex];
                     NSLayoutConstraint *lastCon = self.indicatorCons.firstObject;
@@ -269,7 +269,7 @@ static CGFloat kLCMultiple = 1.4f;
                 }
             }
             else if (_pageStyle == LCFillColorPageStyle){
-                [(IndicatorView *)self.currentView frontView].layer.timeOffset = 1.0f;
+                [(IndicatorView *)currentIndicator frontView].layer.timeOffset = 1.0f;
             }
             self.isDefaultSet = NO;
         });
@@ -308,29 +308,23 @@ static CGFloat kLCMultiple = 1.4f;
             (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
             newOffset.x != oldOffset.x &&
             (NSInteger)ABS(newOffset.x - oldOffset.x)) {
-            
             CGFloat oldRate = oldOffset.x / scrollViewWidth;
             lastIndex = (NSInteger)ceilf(oldRate);
             if (lastIndex <= _numberOfPages - 1) {
                 lastPointView = self.indicatorViews[lastIndex];
                 isNoAnimationScroll = YES;
             }
-            
         }
+        
         if (!_sourceScrollView.decelerating && _isDefaultSet) {
             return;
         }
-        
         if (_pageStyle == LCScaleColorPageStyle) {
-            
             if (isNoAnimationScroll) {
-                currentPointView.layer.timeOffset = 1.0f;
-                lastPointView.layer.timeOffset = 0.0f;
+                timeOffset = 1.0f;
             }
-            else{
-                currentPointView.layer.timeOffset = timeOffset;
-                lastPointView.layer.timeOffset = 1.0f - timeOffset;
-            }
+            currentPointView.layer.timeOffset = timeOffset;
+            lastPointView.layer.timeOffset = 1.0f - timeOffset;
         }
         else if (_pageStyle == LCDepthColorPageStyle){
             
@@ -359,7 +353,6 @@ static CGFloat kLCMultiple = 1.4f;
             else{
                 currentCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (currentIndex - timeOffset) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
             }
-           
             lastCon.constant = (_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + (timeOffset + (currentIndex ? : 1 ) - 1) * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin);
         }
         else if (_pageStyle == LCSquirmPageStyle){
@@ -376,31 +369,14 @@ static CGFloat kLCMultiple = 1.4f;
             
         }
         else if (_pageStyle == LCFillColorPageStyle){
-            if (!_sourceScrollView.decelerating && _isDefaultSet) {
-                return;
-            }
-            if ((NSInteger)newOffset.x % (NSInteger)scrollViewWidth == 0 &&
-                (NSInteger)oldOffset.x % (NSInteger)scrollViewWidth == 0 &&
-                newOffset.x != oldOffset.x &&
-                (NSInteger)ABS(newOffset.x - oldOffset.x)) {
-                
-                CGFloat oldRate = oldOffset.x / scrollViewWidth;
-                lastIndex = (NSInteger)ceilf(oldRate);
-                if (lastIndex <= _numberOfPages - 1) {
-                    lastPointView = self.indicatorViews[lastIndex];
-                    currentPointView.layer.timeOffset = 1.0f;
-                    lastPointView.layer.timeOffset = 0.0f;
-                    self.currentPage = currentIndex;
-                }
-                return;
+            if (isNoAnimationScroll) {
+                timeOffset = 1.0f;
             }
             [(IndicatorView *)currentPointView frontView].layer.timeOffset = timeOffset;
             [(IndicatorView *)lastPointView frontView].layer.timeOffset = 1.0f - timeOffset;
         }
         self.currentPage = currentIndex;
-        self.currentView = _indicatorViews[currentIndex];
     }
-    
 }
 
 
@@ -425,18 +401,15 @@ static CGFloat kLCMultiple = 1.4f;
     [self.indicatorCons removeAllObjects];
     [self.indicatorViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
-//        [view removeConstraints:view.constraints];
         // size
         [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:_indicatorDiameter]];
         [view addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
-        
         // position
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
         NSLayoutConstraint *con = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:(_indicatorDiameter * _indicatorMultiple * kLCHalfNumber) + idx * (_indicatorDiameter * _indicatorMultiple + _indicatorMargin)];
         [self.indicatorCons addObject:con];
         [self.contentView addConstraint:con];
     }];
-    
 }
 
 

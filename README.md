@@ -9,17 +9,21 @@ Custom UIPageControl with a simple animation, Support AtuoLayout.
 
 ##Demo
 
-**SquirmPageStyle**
+**LCSquirmPageStyle**
 
 ![1](demo1.gif)
 
-**ScaleColorPageStyle**
+**LCScaleColorPageStyle**
 
 ![2](demo2.gif)
 
-**DepthColorPageStyle**
+**LCDepthColorPageStyle**
 
 ![3](demo3.gif)
+
+**LCFillColorPageStyle**
+
+![4](demo4.gif)
 
 ##Installation
 
@@ -35,7 +39,7 @@ pod 'LCAnimatedPageControl'
 ```
 self.pageControl = [[LCAnimatedPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, 280, 20)];
 self.pageControl.center = CGPointMake(self.view.frame.size.width * 0.5f, _pageControl.center.y);
-self.pageControl.pageStyle = ScalePageStyle;
+self.pageControl.pageStyle = LCScalePageStyle;
 self.pageControl.numberOfPages = 5;
 self.pageControl.indicatorMargin = 5.0f;
 self.pageControl.indicatorMultiple = 1.6f;

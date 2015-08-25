@@ -4,6 +4,7 @@
 ![Pod version](http://img.shields.io/cocoapods/v/LCAnimatedPageControl.svg?style=flat)
 ![Platform info](http://img.shields.io/cocoapods/p/LCAnimatedPageControl.svg?style=flat)
 
+![logo](logo.png)
 
 Custom UIPageControl with a simple animation, Support AtuoLayout.
 

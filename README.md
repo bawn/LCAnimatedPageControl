@@ -10,15 +10,14 @@ Custom UIPageControl with a simple animation.
 
 ##Demo
 
-<pre> <strong>LCSquirmPageStyle      LCScaleColorPageStyle</strong></pre>
+ __LCSquirmPageStyle　　　　　　　　　　　　　　　LCScaleColorPageStyle__
 
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo1.gif" width="320">
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo2.gif" width="320">
 <br/> <br/>
 
-* LCDepthColorPageStyle          
-* LCFillColorPageStyle
-
+ __LCSquirmPageStyle　　　　　　　　　　　　　　　LCFillColorPageStyle__
+ 
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo3.gif" width="320">
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo4.gif" width="320">
 

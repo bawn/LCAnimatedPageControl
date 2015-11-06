@@ -6,25 +6,18 @@
 
 ![logo](logo.png)
 
-Custom UIPageControl with a simple animation, Support AtuoLayout.
+Custom UIPageControl with a simple animation.
 
 ##Demo
+**LCScaleColorPageStyle LCDepthColorPageStyle**
 
-**LCSquirmPageStyle**
+<img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo1.gif" width="320">
+<img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo2.gif" width="320">
+<br/> <br/>
+**LCScaleColorPageStyle**       **LCDepthColorPageStyle**
 
-![1](demo1.gif)
-
-**LCScaleColorPageStyle**
-
-![2](demo2.gif)
-
-**LCDepthColorPageStyle**
-
-![3](demo3.gif)
-
-**LCFillColorPageStyle**
-
-![4](demo4.gif)
+<img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo3.gif" width="320">
+<img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo4.gif" width="320">
 
 ##Installation
 

@@ -10,7 +10,7 @@ Custom UIPageControl with a simple animation.
 
 ##Demo
 
-<pre> <h3>LCSquirmPageStyle      LCScaleColorPageStyle</h3></pre>
+<pre> <strong>LCSquirmPageStyle      LCScaleColorPageStyle</strong></pre>
 
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo1.gif" width="320">
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo2.gif" width="320">

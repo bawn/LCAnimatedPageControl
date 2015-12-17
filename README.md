@@ -3,6 +3,7 @@
 ![License MIT](https://img.shields.io/dub/l/vibe-d.svg)
 ![Pod version](http://img.shields.io/cocoapods/v/LCAnimatedPageControl.svg?style=flat)
 ![Platform info](http://img.shields.io/cocoapods/p/LCAnimatedPageControl.svg?style=flat)
+[![Support](https://img.shields.io/badge/support-iOS%206%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
 
 ![logo](logo.png)
 

@@ -10,7 +10,7 @@
 #import "LCAnimatedPageControl.h"
 #import "IndicatorView.h"
 
-@interface ViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
@@ -33,7 +33,7 @@
     self.pageControl.indicatorDiameter = 8.0f;
     self.pageControl.indicatorMargin = 10.0f;
     self.pageControl.indicatorMultiple = 1.4;
-    self.pageControl.pageStyle = LCFillColorPageStyle;
+    self.pageControl.pageStyle = LCScaleColorPageStyle;
     self.pageControl.pageIndicatorColor = [UIColor colorWithRed:176.0f/255.0f green:176.0f/255.0f blue:176.0f/255.0f alpha:1.0f];
     self.pageControl.currentPageIndicatorColor = [UIColor colorWithRed:221.0f/255.0f green:34.0f/255.0f blue:56.0f/255.0f alpha:1.0f];
     self.pageControl.sourceScrollView = _collectionView;
@@ -129,5 +129,10 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     return cell;
 }
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(self.view.frame.size.width - 20, 400);
+}
+
 
 @end

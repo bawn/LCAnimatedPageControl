@@ -24,7 +24,7 @@ Custom UIPageControl with a simple animation.
 
 ##Installation
 
-Cocoapods:
+CocoaPods:
 ```
 pod 'LCAnimatedPageControl'
 ```

@@ -7,45 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7A12C58F1B7DDC31003BA91F /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A12C58E1B7DDC31003BA91F /* IndicatorView.m */; };
-		7A68D8A31B450433004B77B9 /* LCAnimatedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */; };
 		7A68D8A41B450433004B77B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A68D8A21B450433004B77B9 /* ViewController.m */; };
 		7A7420D91B3149EC00B30BEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7420D81B3149EC00B30BEA /* main.m */; };
 		7A7420DC1B3149EC00B30BEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7420DB1B3149EC00B30BEA /* AppDelegate.m */; };
 		7A7420E21B3149EC00B30BEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A7420E01B3149EC00B30BEA /* Main.storyboard */; };
 		7A7420E41B3149EC00B30BEA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A7420E31B3149EC00B30BEA /* Images.xcassets */; };
 		7A7420E71B3149EC00B30BEA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A7420E51B3149EC00B30BEA /* LaunchScreen.xib */; };
-		7A7420F31B3149EC00B30BEA /* LCAnimatedPageControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A7420F21B3149EC00B30BEA /* LCAnimatedPageControlTests.m */; };
+		9AE1926C1DF6910000A5A448 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1926B1DF6910000A5A448 /* Info.plist */; };
+		9AE192791DF6912C00A5A448 /* LCAnimatedPageControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE192721DF6912B00A5A448 /* LCAnimatedPageControl.framework */; };
+		9AE1927A1DF6912C00A5A448 /* LCAnimatedPageControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE192721DF6912B00A5A448 /* LCAnimatedPageControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9AE192811DF6916D00A5A448 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AE192801DF6916D00A5A448 /* Info.plist */; };
+		9AE192861DF6917700A5A448 /* IndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE192821DF6917700A5A448 /* IndicatorView.h */; };
+		9AE192871DF6917700A5A448 /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE192831DF6917700A5A448 /* IndicatorView.m */; };
+		9AE192881DF6917700A5A448 /* LCAnimatedPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE192841DF6917700A5A448 /* LCAnimatedPageControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9AE192891DF6917700A5A448 /* LCAnimatedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE192851DF6917700A5A448 /* LCAnimatedPageControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7A7420ED1B3149EC00B30BEA /* PBXContainerItemProxy */ = {
+		9AE192771DF6912C00A5A448 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7A7420CB1B3149EC00B30BEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7A7420D21B3149EC00B30BEA;
+			remoteGlobalIDString = 9AE192711DF6912B00A5A448;
 			remoteInfo = LCAnimatedPageControl;
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9AE1927E1DF6912C00A5A448 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9AE1927A1DF6912C00A5A448 /* LCAnimatedPageControl.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		7A12C58D1B7DDC31003BA91F /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorView.h; sourceTree = "<group>"; };
-		7A12C58E1B7DDC31003BA91F /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorView.m; sourceTree = "<group>"; };
-		7A68D89F1B450433004B77B9 /* LCAnimatedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCAnimatedPageControl.h; sourceTree = "<group>"; };
-		7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAnimatedPageControl.m; sourceTree = "<group>"; };
 		7A68D8A11B450433004B77B9 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7A68D8A21B450433004B77B9 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		7A7420D31B3149EC00B30BEA /* LCAnimatedPageControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCAnimatedPageControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7A7420D71B3149EC00B30BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A7420D31B3149EC00B30BEA /* LCAnimatedPageControlExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCAnimatedPageControlExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A7420D81B3149EC00B30BEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A7420DA1B3149EC00B30BEA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7A7420DB1B3149EC00B30BEA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7A7420E11B3149EC00B30BEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7A7420E31B3149EC00B30BEA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7A7420E61B3149EC00B30BEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		7A7420EC1B3149EC00B30BEA /* LCAnimatedPageControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LCAnimatedPageControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7A7420F11B3149EC00B30BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7A7420F21B3149EC00B30BEA /* LCAnimatedPageControlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LCAnimatedPageControlTests.m; sourceTree = "<group>"; };
+		9AE1926B1DF6910000A5A448 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9AE192721DF6912B00A5A448 /* LCAnimatedPageControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCAnimatedPageControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AE192801DF6916D00A5A448 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9AE192821DF6917700A5A448 /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndicatorView.h; path = ../../IndicatorView.h; sourceTree = "<group>"; };
+		9AE192831DF6917700A5A448 /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndicatorView.m; path = ../../IndicatorView.m; sourceTree = "<group>"; };
+		9AE192841DF6917700A5A448 /* LCAnimatedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LCAnimatedPageControl.h; path = ../../LCAnimatedPageControl.h; sourceTree = "<group>"; };
+		9AE192851DF6917700A5A448 /* LCAnimatedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LCAnimatedPageControl.m; path = ../../LCAnimatedPageControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +71,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE192791DF6912C00A5A448 /* LCAnimatedPageControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7A7420E91B3149EC00B30BEA /* Frameworks */ = {
+		9AE1926E1DF6912B00A5A448 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -69,8 +88,8 @@
 		7A7420CA1B3149EC00B30BEA = {
 			isa = PBXGroup;
 			children = (
-				7A7420D51B3149EC00B30BEA /* LCAnimatedPageControl */,
-				7A7420EF1B3149EC00B30BEA /* LCAnimatedPageControlTests */,
+				7A7420D51B3149EC00B30BEA /* LCAnimatedPageControlExample */,
+				9AE1927F1DF6916D00A5A448 /* LCAnimatedPageControl */,
 				7A7420D41B3149EC00B30BEA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,19 +97,15 @@
 		7A7420D41B3149EC00B30BEA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7A7420D31B3149EC00B30BEA /* LCAnimatedPageControl.app */,
-				7A7420EC1B3149EC00B30BEA /* LCAnimatedPageControlTests.xctest */,
+				7A7420D31B3149EC00B30BEA /* LCAnimatedPageControlExample.app */,
+				9AE192721DF6912B00A5A448 /* LCAnimatedPageControl.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7A7420D51B3149EC00B30BEA /* LCAnimatedPageControl */ = {
+		7A7420D51B3149EC00B30BEA /* LCAnimatedPageControlExample */ = {
 			isa = PBXGroup;
 			children = (
-				7A68D89F1B450433004B77B9 /* LCAnimatedPageControl.h */,
-				7A68D8A01B450433004B77B9 /* LCAnimatedPageControl.m */,
-				7A12C58D1B7DDC31003BA91F /* IndicatorView.h */,
-				7A12C58E1B7DDC31003BA91F /* IndicatorView.m */,
 				7A68D8A11B450433004B77B9 /* ViewController.h */,
 				7A68D8A21B450433004B77B9 /* ViewController.m */,
 				7A7420DA1B3149EC00B30BEA /* AppDelegate.h */,
@@ -100,45 +115,72 @@
 				7A7420E51B3149EC00B30BEA /* LaunchScreen.xib */,
 				7A7420D61B3149EC00B30BEA /* Supporting Files */,
 			);
-			path = LCAnimatedPageControl;
+			path = LCAnimatedPageControlExample;
 			sourceTree = "<group>";
 		};
 		7A7420D61B3149EC00B30BEA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7A7420D71B3149EC00B30BEA /* Info.plist */,
+				9AE1926B1DF6910000A5A448 /* Info.plist */,
 				7A7420D81B3149EC00B30BEA /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		7A7420EF1B3149EC00B30BEA /* LCAnimatedPageControlTests */ = {
+		9AE1927F1DF6916D00A5A448 /* LCAnimatedPageControl */ = {
 			isa = PBXGroup;
 			children = (
-				7A7420F21B3149EC00B30BEA /* LCAnimatedPageControlTests.m */,
-				7A7420F01B3149EC00B30BEA /* Supporting Files */,
+				9AE192821DF6917700A5A448 /* IndicatorView.h */,
+				9AE192831DF6917700A5A448 /* IndicatorView.m */,
+				9AE192841DF6917700A5A448 /* LCAnimatedPageControl.h */,
+				9AE192851DF6917700A5A448 /* LCAnimatedPageControl.m */,
+				9AE192801DF6916D00A5A448 /* Info.plist */,
 			);
-			path = LCAnimatedPageControlTests;
-			sourceTree = "<group>";
-		};
-		7A7420F01B3149EC00B30BEA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7A7420F11B3149EC00B30BEA /* Info.plist */,
-			);
-			name = "Supporting Files";
+			path = LCAnimatedPageControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		9AE1926F1DF6912B00A5A448 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AE192881DF6917700A5A448 /* LCAnimatedPageControl.h in Headers */,
+				9AE192861DF6917700A5A448 /* IndicatorView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		7A7420D21B3149EC00B30BEA /* LCAnimatedPageControl */ = {
+		7A7420D21B3149EC00B30BEA /* LCAnimatedPageControlExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7A7420F61B3149EC00B30BEA /* Build configuration list for PBXNativeTarget "LCAnimatedPageControl" */;
+			buildConfigurationList = 7A7420F61B3149EC00B30BEA /* Build configuration list for PBXNativeTarget "LCAnimatedPageControlExample" */;
 			buildPhases = (
 				7A7420CF1B3149EC00B30BEA /* Sources */,
 				7A7420D01B3149EC00B30BEA /* Frameworks */,
 				7A7420D11B3149EC00B30BEA /* Resources */,
+				9AE1927E1DF6912C00A5A448 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9AE192781DF6912C00A5A448 /* PBXTargetDependency */,
+			);
+			name = LCAnimatedPageControlExample;
+			productName = LCAnimatedPageControl;
+			productReference = 7A7420D31B3149EC00B30BEA /* LCAnimatedPageControlExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9AE192711DF6912B00A5A448 /* LCAnimatedPageControl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9AE1927B1DF6912C00A5A448 /* Build configuration list for PBXNativeTarget "LCAnimatedPageControl" */;
+			buildPhases = (
+				9AE1926D1DF6912B00A5A448 /* Sources */,
+				9AE1926E1DF6912B00A5A448 /* Frameworks */,
+				9AE1926F1DF6912B00A5A448 /* Headers */,
+				9AE192701DF6912B00A5A448 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -146,26 +188,8 @@
 			);
 			name = LCAnimatedPageControl;
 			productName = LCAnimatedPageControl;
-			productReference = 7A7420D31B3149EC00B30BEA /* LCAnimatedPageControl.app */;
-			productType = "com.apple.product-type.application";
-		};
-		7A7420EB1B3149EC00B30BEA /* LCAnimatedPageControlTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7A7420F91B3149EC00B30BEA /* Build configuration list for PBXNativeTarget "LCAnimatedPageControlTests" */;
-			buildPhases = (
-				7A7420E81B3149EC00B30BEA /* Sources */,
-				7A7420E91B3149EC00B30BEA /* Frameworks */,
-				7A7420EA1B3149EC00B30BEA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7A7420EE1B3149EC00B30BEA /* PBXTargetDependency */,
-			);
-			name = LCAnimatedPageControlTests;
-			productName = LCAnimatedPageControlTests;
-			productReference = 7A7420EC1B3149EC00B30BEA /* LCAnimatedPageControlTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			productReference = 9AE192721DF6912B00A5A448 /* LCAnimatedPageControl.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -179,9 +203,9 @@
 					7A7420D21B3149EC00B30BEA = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
-					7A7420EB1B3149EC00B30BEA = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = 7A7420D21B3149EC00B30BEA;
+					9AE192711DF6912B00A5A448 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -198,8 +222,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7A7420D21B3149EC00B30BEA /* LCAnimatedPageControl */,
-				7A7420EB1B3149EC00B30BEA /* LCAnimatedPageControlTests */,
+				7A7420D21B3149EC00B30BEA /* LCAnimatedPageControlExample */,
+				9AE192711DF6912B00A5A448 /* LCAnimatedPageControl */,
 			);
 		};
 /* End PBXProject section */
@@ -209,16 +233,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE1926C1DF6910000A5A448 /* Info.plist in Resources */,
 				7A7420E21B3149EC00B30BEA /* Main.storyboard in Resources */,
 				7A7420E71B3149EC00B30BEA /* LaunchScreen.xib in Resources */,
 				7A7420E41B3149EC00B30BEA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7A7420EA1B3149EC00B30BEA /* Resources */ = {
+		9AE192701DF6912B00A5A448 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE192811DF6916D00A5A448 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,29 +255,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A12C58F1B7DDC31003BA91F /* IndicatorView.m in Sources */,
 				7A7420DC1B3149EC00B30BEA /* AppDelegate.m in Sources */,
-				7A68D8A31B450433004B77B9 /* LCAnimatedPageControl.m in Sources */,
 				7A68D8A41B450433004B77B9 /* ViewController.m in Sources */,
 				7A7420D91B3149EC00B30BEA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7A7420E81B3149EC00B30BEA /* Sources */ = {
+		9AE1926D1DF6912B00A5A448 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A7420F31B3149EC00B30BEA /* LCAnimatedPageControlTests.m in Sources */,
+				9AE192891DF6917700A5A448 /* LCAnimatedPageControl.m in Sources */,
+				9AE192871DF6917700A5A448 /* IndicatorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7A7420EE1B3149EC00B30BEA /* PBXTargetDependency */ = {
+		9AE192781DF6912C00A5A448 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7A7420D21B3149EC00B30BEA /* LCAnimatedPageControl */;
-			targetProxy = 7A7420ED1B3149EC00B30BEA /* PBXContainerItemProxy */;
+			target = 9AE192711DF6912B00A5A448 /* LCAnimatedPageControl */;
+			targetProxy = 9AE192771DF6912C00A5A448 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -311,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -348,7 +373,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -359,8 +384,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = LCAnimatedPageControl/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				INFOPLIST_FILE = "$(SRCROOT)/LCAnimatedPageControlExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -370,44 +394,61 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = LCAnimatedPageControl/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				INFOPLIST_FILE = "$(SRCROOT)/LCAnimatedPageControlExample/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		7A7420FA1B3149EC00B30BEA /* Debug */ = {
+		9AE1927C1DF6912C00A5A448 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LCAnimatedPageControlTests/Info.plist;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = LCAnimatedPageControl/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beike.LCAnimatedPageControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LCAnimatedPageControl.app/LCAnimatedPageControl";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		7A7420FB1B3149EC00B30BEA /* Release */ = {
+		9AE1927D1DF6912C00A5A448 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = LCAnimatedPageControlTests/Info.plist;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LCAnimatedPageControl/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beike.LCAnimatedPageControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LCAnimatedPageControl.app/LCAnimatedPageControl";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -423,7 +464,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A7420F61B3149EC00B30BEA /* Build configuration list for PBXNativeTarget "LCAnimatedPageControl" */ = {
+		7A7420F61B3149EC00B30BEA /* Build configuration list for PBXNativeTarget "LCAnimatedPageControlExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A7420F71B3149EC00B30BEA /* Debug */,
@@ -432,14 +473,13 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A7420F91B3149EC00B30BEA /* Build configuration list for PBXNativeTarget "LCAnimatedPageControlTests" */ = {
+		9AE1927B1DF6912C00A5A448 /* Build configuration list for PBXNativeTarget "LCAnimatedPageControl" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7A7420FA1B3149EC00B30BEA /* Debug */,
-				7A7420FB1B3149EC00B30BEA /* Release */,
+				9AE1927C1DF6912C00A5A448 /* Debug */,
+				9AE1927D1DF6912C00A5A448 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

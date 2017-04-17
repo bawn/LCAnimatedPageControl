@@ -9,7 +9,7 @@
 
 Custom UIPageControl with a simple animation.
 
-##Demo
+## Demo
 
  __　　LCSquirmPageStyle　　　　　　　　　　　　　LCScaleColorPageStyle__
 
@@ -22,14 +22,14 @@ Custom UIPageControl with a simple animation.
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo3.gif" width="320">
 <img src="https://raw.github.com/bawn/LCAnimatedPageControl/master/demo4.gif" width="320">
 
-##Installation
+## Installation
 
 CocoaPods:
 ```
 pod 'LCAnimatedPageControl'
 ```
 
-##Example Usage
+## Example Usage
 ```
 #import <LCAnimatedPageControl.h>
 ```
@@ -55,14 +55,14 @@ Use the ScalePageStyle, If you want to scrollView to scroll to the non-adjacent 
 }
 ```
 
-##Requirements
+## Requirements
 * iOS 6 or higher
 * ARC
 
-##More Info
+## More Info
 [Blog](http://bawn.github.io/ios/uipagecontrol/2015/06/16/LCAnimatedPageControl.html)
 
-##License
+## License
 
 [MIT](http://mit-license.org/)
 
